@@ -25,6 +25,8 @@ apis:
       - Candidates
       - Pipeline
     properties:
+      - url: openapi/lever-openapi.yml
+        type: OpenAPI
       - url: https://hire.lever.co/developer/documentation#opportunities
         type: Documentation
       - url: https://hire.lever.co/developer/documentation
