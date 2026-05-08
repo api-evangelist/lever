@@ -5,32 +5,68 @@ provider: Lever
 providerId: lever
 created: '2026-05-08'
 modified: '2026-05-08'
-reconciled: false
+reconciled: true
 tags:
-- HR
-- ATS
-- Recruiting
-- Talent Acquisition
-- SaaS
-- Rate Limiting
-- Quotas
-- Throttling
-description: Placeholder rate-limit artifact for Lever. Replace with real limits once the pipeline
-  researches the provider's rate-limit documentation.
-notes: Initial scaffold — limits have not yet been reconciled against the provider's documentation.
+  - HR
+  - ATS
+  - Recruiting
+  - Rate Limiting
+  - Throttling
+description: >-
+  Lever enforces a token-bucket rate limit on its REST API at
+  https://api.lever.co/v1. The default sustained rate is 10 requests per
+  second per API key with burst capacity to 20 req/s. Requests above the
+  bucket return HTTP 429 and clients must back off.
 sources:
-- https://www.lever.co/
+  - https://hire.lever.co/developer/documentation
+notes: >-
+  Limits are scoped per API key (Basic Auth) or per OAuth access token.
+  Burst capacity allows brief spikes to 20 req/s before throttling kicks in.
 responseCodes:
   throttled: 429
 limits:
-- name: Default
-  scope: account
-  metric: varies
-  limit: see provider documentation
-  notes: Pending reconciliation.
+  - name: Per API Key Sustained
+    scope: token
+    metric: requests
+    limit: 10
+    unit: per second
+    notes: >-
+      Sustained rate of 10 requests per second per API key (or OAuth token).
+  - name: Per API Key Burst
+    scope: token
+    metric: requests
+    limit: 20
+    unit: per second (burst)
+    notes: >-
+      Token-bucket burst capacity allows up to 20 req/s for short windows
+      before the bucket empties to the sustained rate.
+  - name: Pagination
+    scope: request
+    metric: results
+    limit: 100
+    unit: per page
+    notes: >-
+      Default 100 results per page; configurable via the limit query
+      parameter (1-100). Use cursor-based offset tokens.
+  - name: Webhook Delivery
+    scope: subscription
+    metric: events
+    notes: >-
+      Webhook events are signed with HMAC-SHA256 and retried on 5xx
+      responses; 2xx must be returned within the platform timeout.
 policies:
-- name: Backoff Strategy
-  description: Clients should implement exponential backoff with jitter and honor any Retry-After header.
+  - name: Backoff Strategy
+    description: >-
+      Exponential backoff with jitter on 429 responses. Honor any
+      Retry-After header in the response.
+  - name: Pagination
+    description: >-
+      Use limit + cursor-based offset tokens for list endpoints; do not
+      scan whole collections in tight loops.
+  - name: include / expand Projection
+    description: >-
+      Use include and expand parameters to retrieve only required fields
+      and inline related objects, reducing total request volume.
 maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+  - FN: Kin Lane
+    email: kin@apievangelist.com

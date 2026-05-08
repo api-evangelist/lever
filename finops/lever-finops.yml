@@ -5,22 +5,22 @@ provider: Lever
 providerId: lever
 created: '2026-05-08'
 modified: '2026-05-08'
-reconciled: false
+reconciled: true
 tags:
-- HR
-- ATS
-- Recruiting
-- Talent Acquisition
-- SaaS
-- FinOps
-- Cost Management
-- FOCUS
-description: FOCUS-aligned FinOps placeholder for Lever. Pipeline will replace with the provider's
-  real billing-model details once researched.
-notes: Initial scaffold — billing model has not yet been reconciled.
+  - HR
+  - ATS
+  - Recruiting
+  - Talent Acquisition
+  - FinOps
+  - FOCUS
+description: >-
+  Lever's billing model is annual subscription on the LeverTRM bundle plus
+  optional add-ons (Nurture, Analytics, Automation). Pricing is custom-quoted
+  by company size and hiring volume. This artifact maps Lever charges to
+  FOCUS columns for FinOps allocation across recruiting cost centers.
 sources:
-- https://www.lever.co/
-- https://focus.finops.org/focus-specification/v1-3/
+  - https://www.lever.co/pricing/
+  - https://focus.finops.org/focus-specification/v1-3/
 alignedWith:
   framework: FinOps Foundation Framework
   frameworkUrl: https://www.finops.org/framework/
@@ -30,13 +30,13 @@ alignedWith:
 publisherName: Lever
 serviceCategory: HR
 billingModel:
-  pricingCategory: To Be Reconciled
-  billingFrequency: Monthly
+  pricingCategory: Annual Subscription
+  billingFrequency: Annual
   billingCurrency: USD
   chargeCategories:
-  - Usage
-  - Purchase
-  - Adjustment
+    - Purchase
+    - Adjustment
+    - Tax
 focusColumns:
   ServiceName: Lever
   ServiceCategory: HR
@@ -44,24 +44,45 @@ focusColumns:
   PublisherName: Lever
   InvoiceIssuerName: Lever
   BillingCurrency: USD
-  ChargeCategory: Usage
+  ChargeCategory: Purchase
 meters:
-- name: api_usage
-  description: Catch-all meter pending reconciliation against the provider's published metering.
-  unit: varies
-  aggregation: sum
-  dimensions:
-  - account
-  - resource
+  - name: lever_trm_subscription
+    description: Annual LeverTRM subscription on the negotiated tier.
+    unit: license-year
+    aggregation: sum
+    dimensions:
+      - tier
+      - cost_center
+  - name: lever_addons
+    description: Add-ons (Nurture, Analytics, Automation, Advanced Reports).
+    unit: addon-year
+    aggregation: sum
+    dimensions:
+      - addon
+      - cost_center
+  - name: implementation_fee
+    description: One-time implementation, integration, or onboarding fees.
+    unit: events
+    aggregation: count
+    dimensions:
+      - service
 principles:
-- name: Visibility
-  description: Pull provider invoices or usage exports until a self-serve usage feed is documented.
-- name: Allocation
-  description: Tag invoice line items to consuming business units in your FinOps store.
-- name: Optimization
-  description: Levers depend on the provider's billing model; review at renewal once reconciled.
-- name: Accountability
-  description: Assign a contract owner to review billing against negotiated terms.
+  - name: Visibility
+    description: >-
+      Pull annual Lever invoices and renewal quotes; reconcile against
+      configured user count and active integrations.
+  - name: Allocation
+    description: >-
+      Allocate Lever cost to recruiting / talent functions; tag by
+      department or cost center via the Recruiting cost center.
+  - name: Optimization
+    description: >-
+      Audit unused add-ons before renewal; consolidate user counts and
+      negotiate volume discounts based on hiring forecast.
+  - name: Accountability
+    description: >-
+      Designate Talent Operations as the contract owner; review quarterly
+      against the master service agreement.
 maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+  - FN: Kin Lane
+    email: kin@apievangelist.com
