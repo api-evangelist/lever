@@ -1,7 +1,7 @@
 aid: lever
 url: https://raw.githubusercontent.com/api-evangelist/lever/refs/heads/main/apis.yml
 name: Lever
-x-type: company
+kind: company
 description: >-
   Lever is a talent acquisition and applicant tracking platform built on
   the Opportunities data model. The Lever API exposes candidates,
@@ -30,7 +30,7 @@ apis:
       - url: https://hire.lever.co/developer/documentation#opportunities
         type: Documentation
       - url: https://hire.lever.co/developer/documentation
-        type: API Reference
+        type: APIReference
     description: >-
       Opportunities are Lever's primary candidate-centric resource. List,
       create, advance, archive, and update candidate opportunities through
@@ -292,23 +292,23 @@ common:
     url: https://www.lever.co/
   - type: Documentation
     url: https://hire.lever.co/developer
-  - type: API Reference
+  - type: APIReference
     url: https://hire.lever.co/developer/documentation
   - type: Pricing
     url: https://www.lever.co/pricing/
   - type: Login
     url: https://hire.lever.co/login
-  - type: Status
+  - type: StatusPage
     url: https://status.lever.co/
   - type: Blog
     url: https://www.lever.co/blog
   - type: Support
     url: https://help.lever.co/
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/lever
-  - type: Privacy Policy
+  - type: PrivacyPolicy
     url: https://www.lever.co/privacy/
-  - type: Terms of Service
+  - type: TermsOfService
     url: https://www.lever.co/legal/
   - type: Authentication
     url: https://hire.lever.co/developer/oauth
