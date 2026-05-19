@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Lever API — Tags
+  description: 'Lever API — Tags. 1 operations. Lead operation: List tags. Self-contained Naftiko capability covering one
+    Lever business surface.'
+  tags:
+  - Lever
+  - Tags
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    LEVER_API_KEY: LEVER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: lever-tags
+    baseUri: https://api.lever.co/v1
+    description: Lever API — Tags business capability. Self-contained, no shared references.
+    resources:
+    - name: tags
+      path: /tags
+      operations:
+      - name: get
+        method: GET
+        description: List tags
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.LEVER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: lever-tags-rest
+    port: 8080
+    description: REST adapter for Lever API — Tags. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/tags
+      name: tags
+      description: REST surface for tags.
+      operations:
+      - method: GET
+        name: get
+        description: List tags
+        call: lever-tags.get
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: lever-tags-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Lever API — Tags. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-tags
+      description: List tags
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: lever-tags.get
+      outputParameters:
+      - type: object
+        mapping: $.

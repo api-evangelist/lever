@@ -1,0 +1,102 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Lever API — Forms
+  description: 'Lever API — Forms. 2 operations. Lead operation: List forms. Self-contained Naftiko capability covering one
+    Lever business surface.'
+  tags:
+  - Lever
+  - Forms
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    LEVER_API_KEY: LEVER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: lever-forms
+    baseUri: https://api.lever.co/v1
+    description: Lever API — Forms business capability. Self-contained, no shared references.
+    resources:
+    - name: opportunities-opportunity-forms
+      path: /opportunities/{opportunity}/forms
+      operations:
+      - name: get
+        method: GET
+        description: List forms
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: profile_forms
+      path: /profile_forms
+      operations:
+      - name: get
+        method: GET
+        description: List profile forms
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.LEVER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: lever-forms-rest
+    port: 8080
+    description: REST adapter for Lever API — Forms. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/opportunities/{opportunity}/forms
+      name: opportunities-opportunity-forms
+      description: REST surface for opportunities-opportunity-forms.
+      operations:
+      - method: GET
+        name: get
+        description: List forms
+        call: lever-forms.get
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/profile-forms
+      name: profile-forms
+      description: REST surface for profile_forms.
+      operations:
+      - method: GET
+        name: get
+        description: List profile forms
+        call: lever-forms.get
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: lever-forms-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Lever API — Forms. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-forms
+      description: List forms
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: lever-forms.get
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-profile-forms
+      description: List profile forms
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: lever-forms.get
+      outputParameters:
+      - type: object
+        mapping: $.

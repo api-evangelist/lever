@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Lever API — AuditEvents
+  description: 'Lever API — AuditEvents. 1 operations. Lead operation: List audit events. Self-contained Naftiko capability
+    covering one Lever business surface.'
+  tags:
+  - Lever
+  - AuditEvents
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    LEVER_API_KEY: LEVER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: lever-auditevents
+    baseUri: https://api.lever.co/v1
+    description: Lever API — AuditEvents business capability. Self-contained, no shared references.
+    resources:
+    - name: audit_events
+      path: /audit_events
+      operations:
+      - name: get
+        method: GET
+        description: List audit events
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.LEVER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: lever-auditevents-rest
+    port: 8080
+    description: REST adapter for Lever API — AuditEvents. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/audit-events
+      name: audit-events
+      description: REST surface for audit_events.
+      operations:
+      - method: GET
+        name: get
+        description: List audit events
+        call: lever-auditevents.get
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: lever-auditevents-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Lever API — AuditEvents. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-audit-events
+      description: List audit events
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: lever-auditevents.get
+      outputParameters:
+      - type: object
+        mapping: $.

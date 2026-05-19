@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Lever API — Sources
+  description: 'Lever API — Sources. 1 operations. Lead operation: List sources. Self-contained Naftiko capability covering
+    one Lever business surface.'
+  tags:
+  - Lever
+  - Sources
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    LEVER_API_KEY: LEVER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: lever-sources
+    baseUri: https://api.lever.co/v1
+    description: Lever API — Sources business capability. Self-contained, no shared references.
+    resources:
+    - name: sources
+      path: /sources
+      operations:
+      - name: get
+        method: GET
+        description: List sources
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.LEVER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: lever-sources-rest
+    port: 8080
+    description: REST adapter for Lever API — Sources. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/sources
+      name: sources
+      description: REST surface for sources.
+      operations:
+      - method: GET
+        name: get
+        description: List sources
+        call: lever-sources.get
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: lever-sources-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Lever API — Sources. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-sources
+      description: List sources
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: lever-sources.get
+      outputParameters:
+      - type: object
+        mapping: $.

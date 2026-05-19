@@ -1,0 +1,102 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Lever API — ArchiveReasons
+  description: 'Lever API — ArchiveReasons. 2 operations. Lead operation: List archive reasons. Self-contained Naftiko capability
+    covering one Lever business surface.'
+  tags:
+  - Lever
+  - ArchiveReasons
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    LEVER_API_KEY: LEVER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: lever-archivereasons
+    baseUri: https://api.lever.co/v1
+    description: Lever API — ArchiveReasons business capability. Self-contained, no shared references.
+    resources:
+    - name: archive_reasons
+      path: /archive_reasons
+      operations:
+      - name: get
+        method: GET
+        description: List archive reasons
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: archive_reasons-archive_reason
+      path: /archive_reasons/{archive_reason}
+      operations:
+      - name: get
+        method: GET
+        description: Retrieve archive reason
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.LEVER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: lever-archivereasons-rest
+    port: 8080
+    description: REST adapter for Lever API — ArchiveReasons. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/archive-reasons
+      name: archive-reasons
+      description: REST surface for archive_reasons.
+      operations:
+      - method: GET
+        name: get
+        description: List archive reasons
+        call: lever-archivereasons.get
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/archive-reasons/{archive-reason}
+      name: archive-reasons-archive-reason
+      description: REST surface for archive_reasons-archive_reason.
+      operations:
+      - method: GET
+        name: get
+        description: Retrieve archive reason
+        call: lever-archivereasons.get
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: lever-archivereasons-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Lever API — ArchiveReasons. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-archive-reasons
+      description: List archive reasons
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: lever-archivereasons.get
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-archive-reason
+      description: Retrieve archive reason
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: lever-archivereasons.get
+      outputParameters:
+      - type: object
+        mapping: $.

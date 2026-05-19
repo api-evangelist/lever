@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Lever API — Notes
+  description: 'Lever API — Notes. 1 operations. Lead operation: List notes. Self-contained Naftiko capability covering one
+    Lever business surface.'
+  tags:
+  - Lever
+  - Notes
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    LEVER_API_KEY: LEVER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: lever-notes
+    baseUri: https://api.lever.co/v1
+    description: Lever API — Notes business capability. Self-contained, no shared references.
+    resources:
+    - name: opportunities-opportunity-notes
+      path: /opportunities/{opportunity}/notes
+      operations:
+      - name: get
+        method: GET
+        description: List notes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.LEVER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: lever-notes-rest
+    port: 8080
+    description: REST adapter for Lever API — Notes. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/opportunities/{opportunity}/notes
+      name: opportunities-opportunity-notes
+      description: REST surface for opportunities-opportunity-notes.
+      operations:
+      - method: GET
+        name: get
+        description: List notes
+        call: lever-notes.get
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: lever-notes-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Lever API — Notes. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-notes
+      description: List notes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: lever-notes.get
+      outputParameters:
+      - type: object
+        mapping: $.

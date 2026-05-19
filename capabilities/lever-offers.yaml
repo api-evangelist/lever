@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Lever API — Offers
+  description: 'Lever API — Offers. 1 operations. Lead operation: List offers. Self-contained Naftiko capability covering
+    one Lever business surface.'
+  tags:
+  - Lever
+  - Offers
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    LEVER_API_KEY: LEVER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: lever-offers
+    baseUri: https://api.lever.co/v1
+    description: Lever API — Offers business capability. Self-contained, no shared references.
+    resources:
+    - name: opportunities-opportunity-offers
+      path: /opportunities/{opportunity}/offers
+      operations:
+      - name: get
+        method: GET
+        description: List offers
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.LEVER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: lever-offers-rest
+    port: 8080
+    description: REST adapter for Lever API — Offers. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/opportunities/{opportunity}/offers
+      name: opportunities-opportunity-offers
+      description: REST surface for opportunities-opportunity-offers.
+      operations:
+      - method: GET
+        name: get
+        description: List offers
+        call: lever-offers.get
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: lever-offers-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Lever API — Offers. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-offers
+      description: List offers
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: lever-offers.get
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,137 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Lever API — Files
+  description: 'Lever API — Files. 3 operations. Lead operation: List file actions. Self-contained Naftiko capability covering
+    one Lever business surface.'
+  tags:
+  - Lever
+  - Files
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    LEVER_API_KEY: LEVER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: lever-files
+    baseUri: https://api.lever.co/v1
+    description: Lever API — Files business capability. Self-contained, no shared references.
+    resources:
+    - name: opportunities-opportunity-file-actions
+      path: /opportunities/{opportunity}/file-actions
+      operations:
+      - name: get
+        method: GET
+        description: List file actions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: opportunities-opportunity-files
+      path: /opportunities/{opportunity}/files
+      operations:
+      - name: get
+        method: GET
+        description: List files
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: post
+        method: POST
+        description: Upload file
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: bearer
+      token: '{{env.LEVER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: lever-files-rest
+    port: 8080
+    description: REST adapter for Lever API — Files. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/opportunities/{opportunity}/file-actions
+      name: opportunities-opportunity-file-actions
+      description: REST surface for opportunities-opportunity-file-actions.
+      operations:
+      - method: GET
+        name: get
+        description: List file actions
+        call: lever-files.get
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/opportunities/{opportunity}/files
+      name: opportunities-opportunity-files
+      description: REST surface for opportunities-opportunity-files.
+      operations:
+      - method: GET
+        name: get
+        description: List files
+        call: lever-files.get
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: post
+        description: Upload file
+        call: lever-files.post
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: lever-files-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Lever API — Files. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-file-actions
+      description: List file actions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: lever-files.get
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-files
+      description: List files
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: lever-files.get
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: upload-file
+      description: Upload file
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: lever-files.post
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

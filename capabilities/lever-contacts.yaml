@@ -1,0 +1,105 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Lever API — Contacts
+  description: 'Lever API — Contacts. 2 operations. Lead operation: Retrieve contact. Self-contained Naftiko capability covering
+    one Lever business surface.'
+  tags:
+  - Lever
+  - Contacts
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    LEVER_API_KEY: LEVER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: lever-contacts
+    baseUri: https://api.lever.co/v1
+    description: Lever API — Contacts business capability. Self-contained, no shared references.
+    resources:
+    - name: contacts-contact
+      path: /contacts/{contact}
+      operations:
+      - name: get
+        method: GET
+        description: Retrieve contact
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: put
+        method: PUT
+        description: Update contact
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: bearer
+      token: '{{env.LEVER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: lever-contacts-rest
+    port: 8080
+    description: REST adapter for Lever API — Contacts. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/contacts/{contact}
+      name: contacts-contact
+      description: REST surface for contacts-contact.
+      operations:
+      - method: GET
+        name: get
+        description: Retrieve contact
+        call: lever-contacts.get
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: put
+        description: Update contact
+        call: lever-contacts.put
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: lever-contacts-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Lever API — Contacts. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: retrieve-contact
+      description: Retrieve contact
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: lever-contacts.get
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-contact
+      description: Update contact
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: lever-contacts.put
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

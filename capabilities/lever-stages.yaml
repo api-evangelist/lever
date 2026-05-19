@@ -1,0 +1,134 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Lever API — Stages
+  description: 'Lever API — Stages. 3 operations. Lead operation: List disposition stages. Self-contained Naftiko capability
+    covering one Lever business surface.'
+  tags:
+  - Lever
+  - Stages
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    LEVER_API_KEY: LEVER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: lever-stages
+    baseUri: https://api.lever.co/v1
+    description: Lever API — Stages business capability. Self-contained, no shared references.
+    resources:
+    - name: disposition_stages
+      path: /disposition_stages
+      operations:
+      - name: get
+        method: GET
+        description: List disposition stages
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: stages
+      path: /stages
+      operations:
+      - name: get
+        method: GET
+        description: List stages
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: stages-stage
+      path: /stages/{stage}
+      operations:
+      - name: get
+        method: GET
+        description: Retrieve stage
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.LEVER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: lever-stages-rest
+    port: 8080
+    description: REST adapter for Lever API — Stages. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/disposition-stages
+      name: disposition-stages
+      description: REST surface for disposition_stages.
+      operations:
+      - method: GET
+        name: get
+        description: List disposition stages
+        call: lever-stages.get
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/stages
+      name: stages
+      description: REST surface for stages.
+      operations:
+      - method: GET
+        name: get
+        description: List stages
+        call: lever-stages.get
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/stages/{stage}
+      name: stages-stage
+      description: REST surface for stages-stage.
+      operations:
+      - method: GET
+        name: get
+        description: Retrieve stage
+        call: lever-stages.get
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: lever-stages-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Lever API — Stages. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-disposition-stages
+      description: List disposition stages
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: lever-stages.get
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-stages
+      description: List stages
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: lever-stages.get
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-stage
+      description: Retrieve stage
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: lever-stages.get
+      outputParameters:
+      - type: object
+        mapping: $.

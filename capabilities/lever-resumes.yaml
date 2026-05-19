@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Lever API — Resumes
+  description: 'Lever API — Resumes. 1 operations. Lead operation: List resumes. Self-contained Naftiko capability covering
+    one Lever business surface.'
+  tags:
+  - Lever
+  - Resumes
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    LEVER_API_KEY: LEVER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: lever-resumes
+    baseUri: https://api.lever.co/v1
+    description: Lever API — Resumes business capability. Self-contained, no shared references.
+    resources:
+    - name: opportunities-opportunity-resumes
+      path: /opportunities/{opportunity}/resumes
+      operations:
+      - name: get
+        method: GET
+        description: List resumes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.LEVER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: lever-resumes-rest
+    port: 8080
+    description: REST adapter for Lever API — Resumes. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/opportunities/{opportunity}/resumes
+      name: opportunities-opportunity-resumes
+      description: REST surface for opportunities-opportunity-resumes.
+      operations:
+      - method: GET
+        name: get
+        description: List resumes
+        call: lever-resumes.get
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: lever-resumes-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Lever API — Resumes. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-resumes
+      description: List resumes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: lever-resumes.get
+      outputParameters:
+      - type: object
+        mapping: $.

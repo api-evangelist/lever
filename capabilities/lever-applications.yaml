@@ -1,0 +1,102 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Lever API — Applications
+  description: 'Lever API — Applications. 2 operations. Lead operation: List applications for opportunity. Self-contained
+    Naftiko capability covering one Lever business surface.'
+  tags:
+  - Lever
+  - Applications
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    LEVER_API_KEY: LEVER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: lever-applications
+    baseUri: https://api.lever.co/v1
+    description: Lever API — Applications business capability. Self-contained, no shared references.
+    resources:
+    - name: opportunities-opportunity-applications
+      path: /opportunities/{opportunity}/applications
+      operations:
+      - name: get
+        method: GET
+        description: List applications for opportunity
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: opportunities-opportunity-applications-application
+      path: /opportunities/{opportunity}/applications/{application}
+      operations:
+      - name: get
+        method: GET
+        description: Retrieve application
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.LEVER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: lever-applications-rest
+    port: 8080
+    description: REST adapter for Lever API — Applications. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/opportunities/{opportunity}/applications
+      name: opportunities-opportunity-applications
+      description: REST surface for opportunities-opportunity-applications.
+      operations:
+      - method: GET
+        name: get
+        description: List applications for opportunity
+        call: lever-applications.get
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/opportunities/{opportunity}/applications/{application}
+      name: opportunities-opportunity-applications-application
+      description: REST surface for opportunities-opportunity-applications-application.
+      operations:
+      - method: GET
+        name: get
+        description: Retrieve application
+        call: lever-applications.get
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: lever-applications-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Lever API — Applications. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-applications-opportunity
+      description: List applications for opportunity
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: lever-applications.get
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-application
+      description: Retrieve application
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: lever-applications.get
+      outputParameters:
+      - type: object
+        mapping: $.
