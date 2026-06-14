@@ -1,0 +1,1257 @@
+"""
+Lever ATS Conceptual GraphQL Schema
+Source: https://hire.lever.co/developer/documentation
+GitHub: https://github.com/lever
+Type: Conceptual REST-to-GraphQL translation
+"""
+
+# ---------------------------------------------------------------------------
+# Scalars and Enums
+# ---------------------------------------------------------------------------
+
+scalar DateTime
+scalar JSON
+scalar Upload
+
+enum OpportunityState {
+  ACTIVE
+  ARCHIVED
+  HIRED
+}
+
+enum PostingState {
+  PUBLISHED
+  CLOSED
+  DRAFT
+  PENDING
+  REJECTED
+  DELETED
+}
+
+enum WorkType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  INTERNSHIP
+  TEMPORARY
+}
+
+enum OfferStatus {
+  DRAFT
+  APPROVAL_SENT
+  APPROVED
+  SENT
+  OPENED
+  SIGNED
+  DECLINED
+  WITHDRAWN
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  TEAM_MEMBER
+  LIMITED_TEAM_MEMBER
+  INTERVIEWER
+  OUTSIDER
+}
+
+enum RequisitionStatus {
+  OPEN
+  APPROVED
+  CLOSED
+  CANCELED
+}
+
+enum ConsentStatus {
+  PENDING
+  GRANTED
+  DENIED
+  EXPIRED
+}
+
+enum WebhookStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum FeedbackDecision {
+  STRONG_YES
+  YES
+  NO
+  STRONG_NO
+}
+
+enum NoteVisibility {
+  INTERNAL
+  EXTERNAL
+}
+
+enum EEOGender {
+  MALE
+  FEMALE
+  NON_BINARY
+  PREFER_NOT_TO_SAY
+}
+
+enum EEORace {
+  AMERICAN_INDIAN
+  ASIAN
+  BLACK
+  HISPANIC
+  NATIVE_HAWAIIAN
+  WHITE
+  TWO_OR_MORE
+  PREFER_NOT_TO_SAY
+}
+
+# ---------------------------------------------------------------------------
+# Pagination
+# ---------------------------------------------------------------------------
+
+type PageInfo {
+  hasNextPage: Boolean!
+  nextCursor: String
+  total: Int
+}
+
+# ---------------------------------------------------------------------------
+# Organization and Platform
+# ---------------------------------------------------------------------------
+
+"""Lever tenant/account configuration."""
+type Organization {
+  id: ID!
+  name: String!
+  domain: String
+  logoUrl: String
+  timezone: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""OAuth 2.0 client application registered with Lever."""
+type OAuthClient {
+  id: ID!
+  name: String!
+  clientId: String!
+  redirectUris: [String!]!
+  scopes: [String!]!
+  createdAt: DateTime!
+}
+
+"""API key or OAuth token used to authenticate API requests."""
+type APIToken {
+  id: ID!
+  name: String!
+  createdAt: DateTime!
+  expiresAt: DateTime
+  scopes: [String!]!
+  user: User
+}
+
+"""Tenant-scoped audit log entry for security monitoring and SOC reporting."""
+type AuditEvent {
+  id: ID!
+  eventType: String!
+  actorId: ID
+  actor: User
+  targetId: ID
+  targetType: String
+  description: String
+  ipAddress: String
+  userAgent: String
+  createdAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Users and People
+# ---------------------------------------------------------------------------
+
+"""Lever platform user with role-based access control."""
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  username: String
+  role: UserRole!
+  accessRole: String
+  isDeleted: Boolean!
+  externalDirectoryId: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Unique person record that deduplicates candidates across multiple Opportunities."""
+type Contact {
+  id: ID!
+  name: String!
+  headline: String
+  location: String
+  emails: [ContactEmail!]!
+  phones: [ContactPhone!]!
+  links: [String!]!
+  tags: [String!]!
+  sources: [String!]!
+  opportunities: [Opportunity!]!
+  dataProtection: DataProtection
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Email address associated with a Contact."""
+type ContactEmail {
+  id: ID!
+  value: String!
+  type: String
+  isPrimary: Boolean!
+}
+
+"""Phone number associated with a Contact."""
+type ContactPhone {
+  id: ID!
+  value: String!
+  type: String
+  isPrimary: Boolean!
+}
+
+"""User designated as Hiring Manager on an Opportunity or Posting."""
+type HiringManager {
+  id: ID!
+  user: User!
+  postingId: ID
+  opportunityId: ID
+}
+
+"""Collection of Users assigned roles on an Opportunity."""
+type HiringTeam {
+  opportunityId: ID!
+  hiringManagers: [User!]!
+  recruiters: [User!]!
+  coordinators: [User!]!
+  sourcers: [User!]!
+}
+
+# ---------------------------------------------------------------------------
+# Organization Structure
+# ---------------------------------------------------------------------------
+
+"""Organizational department grouping Postings and Requisitions."""
+type Department {
+  id: ID!
+  name: String!
+  parentId: ID
+  parent: Department
+  children: [Department!]!
+  postings: [Posting!]!
+  createdAt: DateTime!
+}
+
+"""Sub-group within a Department for finer-grained reporting."""
+type Team {
+  id: ID!
+  name: String!
+  department: Department
+  members: [User!]!
+  createdAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Pipeline
+# ---------------------------------------------------------------------------
+
+"""Configured stage definition in a Lever account's hiring pipeline."""
+type PipelineStage {
+  id: ID!
+  text: String!
+  type: String
+  """The order index of this stage in the pipeline."""
+  index: Int!
+}
+
+"""Named hiring pipeline configuration."""
+type Pipeline {
+  id: ID!
+  name: String!
+  stages: [PipelineStage!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Current stage of an Opportunity in the pipeline."""
+type Stage {
+  id: ID!
+  text: String!
+}
+
+# ---------------------------------------------------------------------------
+# Archive
+# ---------------------------------------------------------------------------
+
+"""Reason code for archiving an Opportunity."""
+type ArchiveReason {
+  id: ID!
+  text: String!
+  status: String!
+  type: String
+}
+
+"""Record of an Opportunity being removed from the active pipeline."""
+type Archive {
+  id: ID!
+  opportunity: Opportunity!
+  reason: ArchiveReason!
+  archivedBy: User
+  archivedAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Tags and Sources
+# ---------------------------------------------------------------------------
+
+"""Label applied to Opportunities for cohorting and analytics."""
+type Tag {
+  id: ID!
+  text: String!
+  count: Int
+}
+
+"""Attribution source for how a candidate entered the pipeline."""
+type Source {
+  id: ID!
+  text: String!
+  type: String
+}
+
+"""Full attribution record linking Source and channel to an Opportunity."""
+type Attribution {
+  id: ID!
+  opportunity: Opportunity!
+  source: Source
+  channel: String
+  referrer: User
+  postingId: ID
+  createdAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Postings and Jobs
+# ---------------------------------------------------------------------------
+
+"""Location attached to a Posting."""
+type JobLocation {
+  id: ID!
+  text: String!
+  city: String
+  state: String
+  country: String
+  isRemote: Boolean!
+  postalCode: String
+}
+
+"""Work type classification for a Posting."""
+type JobWorkType {
+  id: ID!
+  text: String!
+  value: WorkType!
+}
+
+"""Shareable anonymous link for a Posting that does not expose candidate identity."""
+type AnonymousLink {
+  id: ID!
+  posting: Posting!
+  url: String!
+  expiresAt: DateTime
+  createdAt: DateTime!
+}
+
+"""Employee referral submission form attached to a Posting."""
+type ReferralForm {
+  id: ID!
+  posting: Posting!
+  fields: [FormField!]!
+  createdAt: DateTime!
+}
+
+"""Application form attached to a Posting with custom fields."""
+type PostingForm {
+  id: ID!
+  posting: Posting!
+  fields: [FormField!]!
+  eeoEnabled: Boolean!
+  createdAt: DateTime!
+}
+
+"""A single field definition within a form."""
+type FormField {
+  id: ID!
+  text: String!
+  type: String!
+  required: Boolean!
+  options: [String!]
+  description: String
+}
+
+"""Job listing managed through Lever."""
+type Posting {
+  id: ID!
+  text: String!
+  state: PostingState!
+  department: Department
+  team: Team
+  location: JobLocation
+  workType: JobWorkType
+  distributionChannels: [String!]!
+  reqCode: String
+  requisition: Requisition
+  hiringManager: User
+  urls: PostingUrls
+  categories: PostingCategories
+  content: PostingContent
+  tags: [String!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  publishedAt: DateTime
+  form: PostingForm
+  referralForm: ReferralForm
+  anonymousLinks: [AnonymousLink!]!
+  applications: [Application!]!
+  opportunities: [Opportunity!]!
+}
+
+type PostingUrls {
+  list: String
+  show: String
+  apply: String
+}
+
+type PostingCategories {
+  commitment: String
+  department: String
+  location: String
+  team: String
+  allLocations: [String!]
+}
+
+type PostingContent {
+  description: String
+  descriptionHtml: String
+  lists: [PostingContentSection!]!
+  closing: String
+  closingHtml: String
+}
+
+type PostingContentSection {
+  text: String!
+  content: String
+}
+
+# ---------------------------------------------------------------------------
+# Requisitions
+# ---------------------------------------------------------------------------
+
+"""Headcount request backing a Posting, with compensation bands and approval state."""
+type Requisition {
+  id: ID!
+  name: String!
+  reqCode: String
+  status: RequisitionStatus!
+  headcountTotal: Int
+  headcountHired: Int
+  headcountRemaining: Int
+  internalJobCode: String
+  compensationBandLow: Float
+  compensationBandHigh: Float
+  compensationCurrency: String
+  compensationInterval: String
+  department: Department
+  team: Team
+  hiringManagers: [User!]!
+  posting: Posting
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Opportunities and Applications
+# ---------------------------------------------------------------------------
+
+"""Formal submission of a candidate against a Posting."""
+type Application {
+  id: ID!
+  opportunity: Opportunity!
+  posting: Posting!
+  type: String
+  candidateName: String
+  email: String
+  phone: String
+  resume: Resume
+  formFields: [ApplicationFormField!]!
+  eeoData: EEOData
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type ApplicationFormField {
+  id: ID!
+  text: String!
+  value: JSON
+}
+
+"""A candidate's public application submission through a Posting's form."""
+type PostingApplication {
+  id: ID!
+  posting: Posting!
+  candidateName: String!
+  email: String!
+  phone: String
+  resume: Upload
+  formFields: [ApplicationFormField!]!
+  createdAt: DateTime!
+}
+
+"""Parsed resume data including work history, education, and skills."""
+type Resume {
+  id: ID!
+  opportunityId: ID!
+  fileId: ID
+  fileName: String
+  parsedData: ResumedParsedData
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type ResumedParsedData {
+  positions: [ResumePosition!]!
+  schools: [ResumeSchool!]!
+  skills: [String!]!
+  summary: String
+}
+
+type ResumePosition {
+  org: String
+  title: String
+  summary: String
+  start: ResumeDate
+  end: ResumeDate
+  isCurrent: Boolean
+}
+
+type ResumeSchool {
+  org: String
+  degree: String
+  field: String
+  start: ResumeDate
+  end: ResumeDate
+}
+
+type ResumeDate {
+  year: Int
+  month: Int
+}
+
+"""Central candidate-in-pipeline record."""
+type Opportunity {
+  id: ID!
+  name: String!
+  headline: String
+  contact: Contact
+  emails: [String!]!
+  phones: [String!]!
+  links: [String!]!
+  tags: [String!]!
+  sources: [String!]!
+  origin: String
+  sourcedBy: User
+  owner: User
+  stage: Stage
+  stageChanges: [StageChange!]!
+  location: String
+  posting: Posting
+  applications: [Application!]!
+  resume: Resume
+  interviews: [InterviewPanel!]!
+  feedback: [InterviewFeedback!]!
+  offers: [Offer!]!
+  notes: [InternalNote!]!
+  followers: [User!]!
+  hiringManager: User
+  requisition: Requisition
+  state: OpportunityState!
+  archive: Archive
+  attributions: [Attribution!]!
+  dataProtection: DataProtection
+  isAnonymized: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  snoozedUntil: DateTime
+}
+
+type StageChange {
+  toStageId: ID!
+  toStage: Stage
+  userId: ID
+  user: User
+  updatedAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Interviews and Feedback
+# ---------------------------------------------------------------------------
+
+"""A scheduled interview panel tied to an Opportunity."""
+type InterviewPanel {
+  id: ID!
+  opportunity: Opportunity!
+  posting: Posting!
+  stage: Stage
+  subject: String
+  note: String
+  interviews: [Interview!]!
+  feedbackTemplate: FeedbackTemplate
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Single interview event within a Panel."""
+type Interview {
+  id: ID!
+  panel: InterviewPanel!
+  subject: String
+  note: String
+  interviewers: [Interviewer!]!
+  feedbackTemplate: FeedbackTemplate
+  location: String
+  phone: String
+  duration: Int
+  date: DateTime
+  timezone: String
+  canceledAt: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Interviewer {
+  user: User!
+  feedbackToken: FeedbackToken
+}
+
+"""Grouping of interviewers assigned to an interview event."""
+type Panel {
+  id: ID!
+  interview: Interview!
+  interviewers: [User!]!
+}
+
+"""Feedback record submitted by an interviewer."""
+type InterviewFeedback {
+  id: ID!
+  opportunity: Opportunity!
+  interview: Interview
+  panel: InterviewPanel
+  author: User!
+  completedAt: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  fields: [FeedbackField!]!
+  decision: FeedbackDecision
+}
+
+type FeedbackField {
+  id: ID!
+  text: String!
+  type: String!
+  value: JSON
+}
+
+"""Structured scorecard with scored dimensions and overall recommendation."""
+type Scorecard {
+  id: ID!
+  feedback: InterviewFeedback!
+  dimensions: [ScorecardDimension!]!
+  decision: FeedbackDecision
+  notes: String
+}
+
+type ScorecardDimension {
+  id: ID!
+  text: String!
+  score: Int
+  note: String
+}
+
+"""Template defining questions and scoring rubrics for a stage or posting."""
+type FeedbackTemplate {
+  id: ID!
+  text: String!
+  instructions: String
+  fields: [FormField!]!
+  postings: [Posting!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Time-limited token allowing an interviewer to submit feedback without a Lever login."""
+type FeedbackToken {
+  id: ID!
+  interview: Interview!
+  user: User!
+  token: String!
+  expiresAt: DateTime!
+  createdAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Notes
+# ---------------------------------------------------------------------------
+
+"""Private note on an Opportunity visible only to hiring team members."""
+type InternalNote {
+  id: ID!
+  opportunity: Opportunity!
+  author: User!
+  body: String!
+  visibility: NoteVisibility!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Note on an Opportunity that can be shared externally."""
+type ExternalNote {
+  id: ID!
+  opportunity: Opportunity!
+  author: User!
+  body: String!
+  sharedWith: [String!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Offers
+# ---------------------------------------------------------------------------
+
+"""Offer record attached to an Opportunity."""
+type Offer {
+  id: ID!
+  opportunity: Opportunity!
+  status: OfferStatus!
+  creator: User!
+  sentAt: DateTime
+  signedAt: DateTime
+  expiresAt: DateTime
+  currentVersion: OfferVersion
+  versions: [OfferVersion!]!
+  approvalChain: [OfferApproval!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Versioned snapshot of an Offer."""
+type OfferVersion {
+  id: ID!
+  offer: Offer!
+  versionNumber: Int!
+  fields: [OfferField!]!
+  sentTo: String
+  createdAt: DateTime!
+}
+
+type OfferField {
+  identifier: String!
+  text: String!
+  value: JSON
+  currency: String
+  interval: String
+}
+
+"""Individual approval step in an Offer approval chain."""
+type OfferApproval {
+  id: ID!
+  offer: Offer!
+  approver: User!
+  approvedAt: DateTime
+  declinedAt: DateTime
+  comment: String
+  order: Int!
+}
+
+# ---------------------------------------------------------------------------
+# Surveys and Compliance
+# ---------------------------------------------------------------------------
+
+"""Record of a survey being sent to a candidate."""
+type SurveySend {
+  id: ID!
+  opportunity: Opportunity!
+  surveyType: String!
+  sentAt: DateTime!
+  completedAt: DateTime
+  response: SurveyResponse
+}
+
+"""Candidate's response to a survey."""
+type SurveyResponse {
+  id: ID!
+  surveySend: SurveySend!
+  answers: [SurveyAnswer!]!
+  completedAt: DateTime!
+}
+
+type SurveyAnswer {
+  question: SurveyQuestion!
+  value: JSON
+}
+
+"""Individual question within a survey."""
+type SurveyQuestion {
+  id: ID!
+  text: String!
+  type: String!
+  required: Boolean!
+  options: [String!]
+}
+
+"""GDPR/data protection settings for a Contact or Opportunity."""
+type DataProtection {
+  id: ID!
+  contactId: ID!
+  store: DataProtectionConsent
+  send: DataProtectionConsent
+}
+
+type DataProtectionConsent {
+  status: ConsentStatus!
+  expiresAt: DateTime
+  reason: String
+}
+
+"""Consent request sent to a candidate for data processing."""
+type ConsentRequest {
+  id: ID!
+  contact: Contact!
+  opportunity: Opportunity
+  sentAt: DateTime!
+  respondedAt: DateTime
+  status: ConsentStatus!
+  expiresAt: DateTime
+  purpose: String
+}
+
+"""Anonymous EEO survey data for compliance reporting."""
+type EEOData {
+  id: ID!
+  opportunityId: ID!
+  gender: EEOGender
+  race: EEORace
+  veteran: Boolean
+  disability: Boolean
+}
+
+# ---------------------------------------------------------------------------
+# Webhooks
+# ---------------------------------------------------------------------------
+
+"""Registered webhook subscription."""
+type Webhook {
+  id: ID!
+  url: String!
+  status: WebhookStatus!
+  eventTypes: [String!]!
+  signingToken: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Delivered webhook event payload."""
+type WebhookEvent {
+  id: ID!
+  webhook: Webhook!
+  eventType: String!
+  payload: JSON!
+  signature: String!
+  deliveredAt: DateTime
+  statusCode: Int
+  retryCount: Int
+  createdAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Feeds
+# ---------------------------------------------------------------------------
+
+"""Entry in the XML job aggregator feed for syndication to Indeed, Glassdoor, LinkedIn."""
+type XMLFeedEntry {
+  id: ID!
+  posting: Posting!
+  title: String!
+  url: String!
+  description: String
+  location: String
+  category: String
+  company: String!
+  pubDate: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Connection Types
+# ---------------------------------------------------------------------------
+
+type OpportunityConnection {
+  nodes: [Opportunity!]!
+  pageInfo: PageInfo!
+}
+
+type ContactConnection {
+  nodes: [Contact!]!
+  pageInfo: PageInfo!
+}
+
+type PostingConnection {
+  nodes: [Posting!]!
+  pageInfo: PageInfo!
+}
+
+type UserConnection {
+  nodes: [User!]!
+  pageInfo: PageInfo!
+}
+
+type RequisitionConnection {
+  nodes: [Requisition!]!
+  pageInfo: PageInfo!
+}
+
+type AuditEventConnection {
+  nodes: [AuditEvent!]!
+  pageInfo: PageInfo!
+}
+
+type ApplicationConnection {
+  nodes: [Application!]!
+  pageInfo: PageInfo!
+}
+
+# ---------------------------------------------------------------------------
+# Filter Inputs
+# ---------------------------------------------------------------------------
+
+input OpportunityFilter {
+  stageId: ID
+  postingId: ID
+  contactId: ID
+  state: OpportunityState
+  tags: [String!]
+  sources: [String!]
+  ownerId: ID
+  createdAtStart: DateTime
+  createdAtEnd: DateTime
+  updatedAtStart: DateTime
+  updatedAtEnd: DateTime
+  query: String
+}
+
+input PostingFilter {
+  state: PostingState
+  departmentId: ID
+  teamId: ID
+  locationText: String
+  workType: WorkType
+  query: String
+}
+
+input ContactFilter {
+  email: String
+  name: String
+  tags: [String!]
+  query: String
+}
+
+input UserFilter {
+  role: UserRole
+  isDeleted: Boolean
+  query: String
+}
+
+input RequisitionFilter {
+  status: RequisitionStatus
+  departmentId: ID
+  hiringManagerId: ID
+}
+
+input AuditEventFilter {
+  actorId: ID
+  eventType: String
+  createdAtStart: DateTime
+  createdAtEnd: DateTime
+}
+
+# ---------------------------------------------------------------------------
+# Mutation Inputs
+# ---------------------------------------------------------------------------
+
+input CreateOpportunityInput {
+  name: String!
+  email: String
+  phone: String
+  headline: String
+  location: String
+  postingId: ID
+  stageId: ID
+  tags: [String!]
+  sources: [String!]
+  origin: String
+  ownerId: ID
+  links: [String!]
+}
+
+input UpdateOpportunityInput {
+  name: String
+  headline: String
+  location: String
+  stageId: ID
+  ownerId: ID
+  tags: [String!]
+  snoozedUntil: DateTime
+}
+
+input CreateNoteInput {
+  body: String!
+  visibility: NoteVisibility
+  notifyFollowers: Boolean
+}
+
+input CreatePostingInput {
+  text: String!
+  state: PostingState
+  departmentId: ID
+  teamId: ID
+  locationId: ID
+  workType: WorkType
+  reqCode: String
+  hiringManagerId: ID
+  distributionChannels: [String!]
+}
+
+input UpdatePostingInput {
+  text: String
+  state: PostingState
+  departmentId: ID
+  teamId: ID
+  locationId: ID
+  workType: WorkType
+  reqCode: String
+  hiringManagerId: ID
+}
+
+input CreateApplicationInput {
+  postingId: ID!
+  opportunityId: ID
+  name: String!
+  email: String!
+  phone: String
+  resumeFileId: ID
+  formFields: [ApplicationFormFieldInput!]
+}
+
+input ApplicationFormFieldInput {
+  fieldId: ID!
+  value: JSON
+}
+
+input CreateOfferInput {
+  fields: [OfferFieldInput!]!
+}
+
+input OfferFieldInput {
+  identifier: String!
+  value: JSON
+  currency: String
+  interval: String
+}
+
+input CreateRequisitionInput {
+  name: String!
+  reqCode: String
+  departmentId: ID
+  teamId: ID
+  headcountTotal: Int
+  compensationBandLow: Float
+  compensationBandHigh: Float
+  compensationCurrency: String
+  compensationInterval: String
+  hiringManagerIds: [ID!]
+}
+
+input CreateWebhookInput {
+  url: String!
+  eventTypes: [String!]!
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+  role: UserRole!
+  externalDirectoryId: String
+}
+
+input UpdateUserInput {
+  name: String
+  role: UserRole
+  externalDirectoryId: String
+}
+
+# ---------------------------------------------------------------------------
+# Root Types
+# ---------------------------------------------------------------------------
+
+type Query {
+  """Fetch a single Opportunity by ID."""
+  opportunity(id: ID!): Opportunity
+
+  """Paginated list of Opportunities with optional filtering."""
+  opportunities(filter: OpportunityFilter, limit: Int, cursor: String): OpportunityConnection!
+
+  """Fetch a Contact by ID."""
+  contact(id: ID!): Contact
+
+  """Paginated list of Contacts."""
+  contacts(filter: ContactFilter, limit: Int, cursor: String): ContactConnection!
+
+  """Fetch a Posting by ID. Supports unauthenticated access for public postings."""
+  posting(id: ID!): Posting
+
+  """Paginated list of Postings."""
+  postings(filter: PostingFilter, limit: Int, cursor: String): PostingConnection!
+
+  """Fetch a Stage definition by ID."""
+  stage(id: ID!): Stage
+
+  """List all configured pipeline stages."""
+  stages: [PipelineStage!]!
+
+  """List all archive reason codes."""
+  archiveReasons: [ArchiveReason!]!
+
+  """Fetch a User by ID."""
+  user(id: ID!): User
+
+  """Paginated list of Users."""
+  users(filter: UserFilter, limit: Int, cursor: String): UserConnection!
+
+  """Fetch a Requisition by ID."""
+  requisition(id: ID!): Requisition
+
+  """Paginated list of Requisitions."""
+  requisitions(filter: RequisitionFilter, limit: Int, cursor: String): RequisitionConnection!
+
+  """Fetch an Interview by ID."""
+  interview(id: ID!): Interview
+
+  """List all Interview Panels for an Opportunity."""
+  interviews(opportunityId: ID!): [InterviewPanel!]!
+
+  """Fetch an Offer by ID."""
+  offer(id: ID!): Offer
+
+  """List Offers for an Opportunity."""
+  offers(opportunityId: ID!): [Offer!]!
+
+  """Fetch feedback records for an Opportunity."""
+  feedback(opportunityId: ID!): [InterviewFeedback!]!
+
+  """Fetch all registered Webhook subscriptions."""
+  webhooks: [Webhook!]!
+
+  """Paginated list of Audit Events."""
+  auditEvents(filter: AuditEventFilter, limit: Int, cursor: String): AuditEventConnection!
+
+  """List all Departments."""
+  departments: [Department!]!
+
+  """List all Tags in use across the account."""
+  tags: [Tag!]!
+
+  """List all Sources configured for the account."""
+  sources: [Source!]!
+
+  """Fetch the current Organization/tenant configuration."""
+  organization: Organization
+
+  """List Applications for an Opportunity."""
+  applications(opportunityId: ID!): ApplicationConnection!
+
+  """Fetch EEO data for an Opportunity."""
+  eeoData(opportunityId: ID!): EEOData
+
+  """List available Feedback Templates."""
+  feedbackTemplates: [FeedbackTemplate!]!
+
+  """XML feed entries for job aggregator syndication."""
+  xmlFeedEntries(limit: Int, cursor: String): [XMLFeedEntry!]!
+}
+
+type Mutation {
+  """Create a new Opportunity."""
+  createOpportunity(input: CreateOpportunityInput!): Opportunity!
+
+  """Update an existing Opportunity."""
+  updateOpportunity(id: ID!, input: UpdateOpportunityInput!): Opportunity!
+
+  """Archive an Opportunity with a reason."""
+  archiveOpportunity(id: ID!, reasonId: ID!): Opportunity!
+
+  """Move an Opportunity to a new pipeline stage."""
+  advanceOpportunity(id: ID!, stageId: ID!): Opportunity!
+
+  """Add a note to an Opportunity."""
+  createNote(opportunityId: ID!, input: CreateNoteInput!): InternalNote!
+
+  """Create a new Posting."""
+  createPosting(input: CreatePostingInput!): Posting!
+
+  """Update an existing Posting."""
+  updatePosting(id: ID!, input: UpdatePostingInput!): Posting!
+
+  """Submit a candidate application."""
+  createApplication(input: CreateApplicationInput!): Application!
+
+  """Create an Offer for an Opportunity."""
+  createOffer(opportunityId: ID!, input: CreateOfferInput!): Offer!
+
+  """Approve an Offer in the approval chain."""
+  approveOffer(offerId: ID!): Offer!
+
+  """Withdraw an Offer."""
+  withdrawOffer(offerId: ID!): Offer!
+
+  """Create a Requisition."""
+  createRequisition(input: CreateRequisitionInput!): Requisition!
+
+  """Register a Webhook subscription."""
+  createWebhook(input: CreateWebhookInput!): Webhook!
+
+  """Delete a Webhook subscription."""
+  deleteWebhook(id: ID!): Boolean!
+
+  """Invite a new User to the Lever account."""
+  createUser(input: CreateUserInput!): User!
+
+  """Update a User's role or details."""
+  updateUser(id: ID!, input: UpdateUserInput!): User!
+
+  """Add a tag to an Opportunity."""
+  addTagToOpportunity(opportunityId: ID!, tag: String!): Opportunity!
+
+  """Remove a tag from an Opportunity."""
+  removeTagFromOpportunity(opportunityId: ID!, tag: String!): Opportunity!
+
+  """Add a follower to an Opportunity."""
+  addFollower(opportunityId: ID!, userId: ID!): Opportunity!
+
+  """Remove a follower from an Opportunity."""
+  removeFollower(opportunityId: ID!, userId: ID!): Opportunity!
+
+  """Send a consent request to a candidate."""
+  createConsentRequest(contactId: ID!, opportunityId: ID, purpose: String): ConsentRequest!
+}
