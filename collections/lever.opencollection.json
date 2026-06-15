@@ -1,0 +1,1132 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lever API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Opportunities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List opportunities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/opportunities"
+          },
+          "docs": "List opportunities"
+        },
+        {
+          "info": {
+            "name": "Create opportunity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lever.co/v1/opportunities",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create opportunity"
+        },
+        {
+          "info": {
+            "name": "List deleted opportunities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/opportunities/deleted"
+          },
+          "docs": "List deleted opportunities"
+        },
+        {
+          "info": {
+            "name": "Retrieve opportunity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              }
+            ]
+          },
+          "docs": "Retrieve opportunity"
+        },
+        {
+          "info": {
+            "name": "Update stage",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/stage",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update stage"
+        },
+        {
+          "info": {
+            "name": "Update archived state",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/archived",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update archived state"
+        },
+        {
+          "info": {
+            "name": "Update contact links",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/links",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update contact links"
+        },
+        {
+          "info": {
+            "name": "Update tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/tags",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update tags"
+        },
+        {
+          "info": {
+            "name": "Update sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/sources",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update sources"
+        },
+        {
+          "info": {
+            "name": "List candidates (deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/candidates"
+          },
+          "docs": "List candidates (deprecated)"
+        },
+        {
+          "info": {
+            "name": "Retrieve candidate (deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/candidates/:candidate",
+            "params": [
+              {
+                "name": "candidate",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve candidate (deprecated)"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Applications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List applications for opportunity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/applications",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              }
+            ]
+          },
+          "docs": "List applications for opportunity"
+        },
+        {
+          "info": {
+            "name": "Retrieve application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/applications/:application",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              },
+              {
+                "name": "application",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve application"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Notes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/notes",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              }
+            ]
+          },
+          "docs": "List notes"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Feedback",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List feedback forms",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/feedback",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              }
+            ]
+          },
+          "docs": "List feedback forms"
+        },
+        {
+          "info": {
+            "name": "Create feedback form",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/feedback",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create feedback form"
+        },
+        {
+          "info": {
+            "name": "Retrieve feedback form",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/feedback/:feedback",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              },
+              {
+                "name": "feedback",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve feedback form"
+        },
+        {
+          "info": {
+            "name": "Update feedback form",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/feedback/:feedback",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              },
+              {
+                "name": "feedback",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update feedback form"
+        },
+        {
+          "info": {
+            "name": "Delete feedback form",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/feedback/:feedback",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              },
+              {
+                "name": "feedback",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete feedback form"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Forms",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List forms",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/forms",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              }
+            ]
+          },
+          "docs": "List forms"
+        },
+        {
+          "info": {
+            "name": "List profile forms",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/profile_forms"
+          },
+          "docs": "List profile forms"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/files",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              }
+            ]
+          },
+          "docs": "List files"
+        },
+        {
+          "info": {
+            "name": "Upload file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/files",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upload file"
+        },
+        {
+          "info": {
+            "name": "List file actions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/file-actions",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              }
+            ]
+          },
+          "docs": "List file actions"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Resumes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List resumes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/resumes",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              }
+            ]
+          },
+          "docs": "List resumes"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Interviews",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List interviews",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/interviews",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              }
+            ]
+          },
+          "docs": "List interviews"
+        },
+        {
+          "info": {
+            "name": "List interview panels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/panels",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              }
+            ]
+          },
+          "docs": "List interview panels"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Offers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List offers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/offers",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              }
+            ]
+          },
+          "docs": "List offers"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Contacts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/contacts/:contact",
+            "params": [
+              {
+                "name": "contact",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve contact"
+        },
+        {
+          "info": {
+            "name": "Update contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.lever.co/v1/contacts/:contact",
+            "params": [
+              {
+                "name": "contact",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update contact"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Postings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List postings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/postings"
+          },
+          "docs": "List postings"
+        },
+        {
+          "info": {
+            "name": "Create posting",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lever.co/v1/postings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create posting"
+        },
+        {
+          "info": {
+            "name": "Retrieve posting",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/postings/:posting",
+            "params": [
+              {
+                "name": "posting",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve posting"
+        },
+        {
+          "info": {
+            "name": "Update posting",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.lever.co/v1/postings/:posting",
+            "params": [
+              {
+                "name": "posting",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update posting"
+        },
+        {
+          "info": {
+            "name": "List application questions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/postings/:posting/applications",
+            "params": [
+              {
+                "name": "posting",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List application questions"
+        },
+        {
+          "info": {
+            "name": "Apply to posting",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lever.co/v1/postings/:posting/apply",
+            "params": [
+              {
+                "name": "posting",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Apply to posting"
+        },
+        {
+          "info": {
+            "name": "List users with access",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/postings/:posting/users",
+            "params": [
+              {
+                "name": "posting",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List users with access"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Requisitions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List requisitions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/requisitions"
+          },
+          "docs": "List requisitions"
+        },
+        {
+          "info": {
+            "name": "Create requisition",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lever.co/v1/requisitions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create requisition"
+        },
+        {
+          "info": {
+            "name": "Retrieve requisition",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/requisitions/:requisition",
+            "params": [
+              {
+                "name": "requisition",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve requisition"
+        },
+        {
+          "info": {
+            "name": "Update requisition",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.lever.co/v1/requisitions/:requisition",
+            "params": [
+              {
+                "name": "requisition",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update requisition"
+        },
+        {
+          "info": {
+            "name": "Delete requisition",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lever.co/v1/requisitions/:requisition",
+            "params": [
+              {
+                "name": "requisition",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete requisition"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Stages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List stages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/stages"
+          },
+          "docs": "List stages"
+        },
+        {
+          "info": {
+            "name": "Retrieve stage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/stages/:stage",
+            "params": [
+              {
+                "name": "stage",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve stage"
+        },
+        {
+          "info": {
+            "name": "List disposition stages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/disposition_stages"
+          },
+          "docs": "List disposition stages"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "ArchiveReasons",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List archive reasons",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/archive_reasons"
+          },
+          "docs": "List archive reasons"
+        },
+        {
+          "info": {
+            "name": "Retrieve archive reason",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/archive_reasons/:archive_reason",
+            "params": [
+              {
+                "name": "archive_reason",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve archive reason"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Sources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/sources"
+          },
+          "docs": "List sources"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Tags",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/tags"
+          },
+          "docs": "List tags"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/users"
+          },
+          "docs": "List users"
+        },
+        {
+          "info": {
+            "name": "Create user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lever.co/v1/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create user"
+        },
+        {
+          "info": {
+            "name": "Retrieve user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/users/:user",
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve user"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "AuditEvents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List audit events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/audit_events"
+          },
+          "docs": "List audit events"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "EEO",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List anonymous EEO responses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/eeo/responses"
+          },
+          "docs": "List anonymous EEO responses"
+        },
+        {
+          "info": {
+            "name": "List EEO responses with PII",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/eeo/responses/pii"
+          },
+          "docs": "List EEO responses with PII"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
