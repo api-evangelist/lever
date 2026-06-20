@@ -6,7 +6,7 @@ description: Lever is a talent acquisition and applicant tracking platform built
   the Opportunities data model. The Lever API exposes candidates, opportunities, postings,
   interviews, feedback, requisitions, users, files, webhooks, and a public Postings
   API for embedding job sites.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
 - HR
 - ATS
