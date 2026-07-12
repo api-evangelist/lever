@@ -262,6 +262,14 @@ apis:
   description: XML feed of open postings used by job aggregators (Indeed, Glassdoor,
     LinkedIn) for syndication.
 common:
+- type: TrustCenter
+  url: security/lever-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/lever-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/lever-domain-security.yml
+- type: Authentication
+  url: authentication/lever-authentication.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/lever-
 - type: Website

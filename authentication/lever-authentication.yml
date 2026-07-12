@@ -1,0 +1,19 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/lever-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  description: API key supplied as the basic auth username with empty password.
+  sources:
+  - openapi/lever-openapi.yml
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: OAuth 2.0 bearer access token (Lever Partner OAuth apps).
+  sources:
+  - openapi/lever-openapi.yml
