@@ -262,6 +262,8 @@ apis:
   description: XML feed of open postings used by job aggregators (Indeed, Glassdoor,
     LinkedIn) for syndication.
 common:
+- type: AgenticAccess
+  url: agentic-access/lever-agentic-access.yml
 - type: TrustCenter
   url: security/lever-trust-center.yml
 - type: VulnerabilityDisclosure
