@@ -1,0 +1,55 @@
+openapi: 3.1.0
+info:
+  title: Lever Applications Tags API
+  version: v1
+  description: Minimal OpenAPI 3.1 spec for the Lever talent acquisition platform REST API. Lever's API is organized around the Opportunity (candidate-centric) data model and exposes postings, requisitions, applications, interviews, feedback, offers, files, users, and audit events.
+  contact:
+    name: Lever Developer Documentation
+    url: https://hire.lever.co/developer/documentation
+servers:
+- url: https://api.lever.co/v1
+  description: Lever production API
+security:
+- basicAuth: []
+- bearerAuth: []
+tags:
+- name: Tags
+paths:
+  /tags:
+    get:
+      tags:
+      - Tags
+      summary: List tags
+      responses:
+        '200':
+          $ref: '#/components/responses/Collection'
+components:
+  responses:
+    Collection:
+      description: Collection response with cursor pagination
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+              hasNext:
+                type: boolean
+              next:
+                type: string
+            additionalProperties: true
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: API key supplied as the basic auth username with empty password.
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 bearer access token (Lever Partner OAuth apps).
+x-generated-from: https://hire.lever.co/developer/documentation
+x-generated-by: claude-crawl-2026-05-08

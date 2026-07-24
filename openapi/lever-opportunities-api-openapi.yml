@@ -1,0 +1,193 @@
+openapi: 3.1.0
+info:
+  title: Lever Applications Opportunities API
+  version: v1
+  description: Minimal OpenAPI 3.1 spec for the Lever talent acquisition platform REST API. Lever's API is organized around the Opportunity (candidate-centric) data model and exposes postings, requisitions, applications, interviews, feedback, offers, files, users, and audit events.
+  contact:
+    name: Lever Developer Documentation
+    url: https://hire.lever.co/developer/documentation
+servers:
+- url: https://api.lever.co/v1
+  description: Lever production API
+security:
+- basicAuth: []
+- bearerAuth: []
+tags:
+- name: Opportunities
+paths:
+  /opportunities:
+    get:
+      tags:
+      - Opportunities
+      summary: List opportunities
+      responses:
+        '200':
+          $ref: '#/components/responses/Collection'
+    post:
+      tags:
+      - Opportunities
+      summary: Create opportunity
+      requestBody:
+        $ref: '#/components/requestBodies/Generic'
+      responses:
+        '201':
+          $ref: '#/components/responses/Resource'
+  /opportunities/deleted:
+    get:
+      tags:
+      - Opportunities
+      summary: List deleted opportunities
+      responses:
+        '200':
+          $ref: '#/components/responses/Collection'
+  /opportunities/{opportunity}:
+    parameters:
+    - $ref: '#/components/parameters/OpportunityId'
+    get:
+      tags:
+      - Opportunities
+      summary: Retrieve opportunity
+      responses:
+        '200':
+          $ref: '#/components/responses/Resource'
+  /opportunities/{opportunity}/stage:
+    parameters:
+    - $ref: '#/components/parameters/OpportunityId'
+    put:
+      tags:
+      - Opportunities
+      summary: Update stage
+      requestBody:
+        $ref: '#/components/requestBodies/Generic'
+      responses:
+        '200':
+          $ref: '#/components/responses/Resource'
+  /opportunities/{opportunity}/archived:
+    parameters:
+    - $ref: '#/components/parameters/OpportunityId'
+    put:
+      tags:
+      - Opportunities
+      summary: Update archived state
+      requestBody:
+        $ref: '#/components/requestBodies/Generic'
+      responses:
+        '200':
+          $ref: '#/components/responses/Resource'
+  /opportunities/{opportunity}/links:
+    parameters:
+    - $ref: '#/components/parameters/OpportunityId'
+    put:
+      tags:
+      - Opportunities
+      summary: Update contact links
+      requestBody:
+        $ref: '#/components/requestBodies/Generic'
+      responses:
+        '200':
+          $ref: '#/components/responses/Resource'
+  /opportunities/{opportunity}/tags:
+    parameters:
+    - $ref: '#/components/parameters/OpportunityId'
+    put:
+      tags:
+      - Opportunities
+      summary: Update tags
+      requestBody:
+        $ref: '#/components/requestBodies/Generic'
+      responses:
+        '200':
+          $ref: '#/components/responses/Resource'
+  /opportunities/{opportunity}/sources:
+    parameters:
+    - $ref: '#/components/parameters/OpportunityId'
+    put:
+      tags:
+      - Opportunities
+      summary: Update sources
+      requestBody:
+        $ref: '#/components/requestBodies/Generic'
+      responses:
+        '200':
+          $ref: '#/components/responses/Resource'
+  /candidates:
+    get:
+      tags:
+      - Opportunities
+      summary: List candidates (deprecated)
+      deprecated: true
+      responses:
+        '200':
+          $ref: '#/components/responses/Collection'
+  /candidates/{candidate}:
+    parameters:
+    - name: candidate
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Opportunities
+      summary: Retrieve candidate (deprecated)
+      deprecated: true
+      responses:
+        '200':
+          $ref: '#/components/responses/Resource'
+components:
+  parameters:
+    OpportunityId:
+      name: opportunity
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Opportunity identifier (UUID).
+  responses:
+    Collection:
+      description: Collection response with cursor pagination
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+              hasNext:
+                type: boolean
+              next:
+                type: string
+            additionalProperties: true
+    Resource:
+      description: Single resource response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                additionalProperties: true
+            additionalProperties: true
+  requestBodies:
+    Generic:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: API key supplied as the basic auth username with empty password.
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 bearer access token (Lever Partner OAuth apps).
+x-generated-from: https://hire.lever.co/developer/documentation
+x-generated-by: claude-crawl-2026-05-08

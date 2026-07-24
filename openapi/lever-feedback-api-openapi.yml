@@ -1,0 +1,124 @@
+openapi: 3.1.0
+info:
+  title: Lever Applications Feedback API
+  version: v1
+  description: Minimal OpenAPI 3.1 spec for the Lever talent acquisition platform REST API. Lever's API is organized around the Opportunity (candidate-centric) data model and exposes postings, requisitions, applications, interviews, feedback, offers, files, users, and audit events.
+  contact:
+    name: Lever Developer Documentation
+    url: https://hire.lever.co/developer/documentation
+servers:
+- url: https://api.lever.co/v1
+  description: Lever production API
+security:
+- basicAuth: []
+- bearerAuth: []
+tags:
+- name: Feedback
+paths:
+  /opportunities/{opportunity}/feedback:
+    parameters:
+    - $ref: '#/components/parameters/OpportunityId'
+    get:
+      tags:
+      - Feedback
+      summary: List feedback forms
+      responses:
+        '200':
+          $ref: '#/components/responses/Collection'
+    post:
+      tags:
+      - Feedback
+      summary: Create feedback form
+      requestBody:
+        $ref: '#/components/requestBodies/Generic'
+      responses:
+        '201':
+          $ref: '#/components/responses/Resource'
+  /opportunities/{opportunity}/feedback/{feedback}:
+    parameters:
+    - $ref: '#/components/parameters/OpportunityId'
+    - name: feedback
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Feedback
+      summary: Retrieve feedback form
+      responses:
+        '200':
+          $ref: '#/components/responses/Resource'
+    put:
+      tags:
+      - Feedback
+      summary: Update feedback form
+      requestBody:
+        $ref: '#/components/requestBodies/Generic'
+      responses:
+        '200':
+          $ref: '#/components/responses/Resource'
+    delete:
+      tags:
+      - Feedback
+      summary: Delete feedback form
+      responses:
+        '204':
+          description: Deleted
+components:
+  parameters:
+    OpportunityId:
+      name: opportunity
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Opportunity identifier (UUID).
+  responses:
+    Collection:
+      description: Collection response with cursor pagination
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+              hasNext:
+                type: boolean
+              next:
+                type: string
+            additionalProperties: true
+    Resource:
+      description: Single resource response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                additionalProperties: true
+            additionalProperties: true
+  requestBodies:
+    Generic:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: API key supplied as the basic auth username with empty password.
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 bearer access token (Lever Partner OAuth apps).
+x-generated-from: https://hire.lever.co/developer/documentation
+x-generated-by: claude-crawl-2026-05-08
