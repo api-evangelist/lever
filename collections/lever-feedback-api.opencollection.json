@@ -1,0 +1,143 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lever Applications Feedback API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Feedback",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List feedback forms",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/feedback",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              }
+            ]
+          },
+          "docs": "List feedback forms"
+        },
+        {
+          "info": {
+            "name": "Create feedback form",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/feedback",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create feedback form"
+        },
+        {
+          "info": {
+            "name": "Retrieve feedback form",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/feedback/:feedback",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              },
+              {
+                "name": "feedback",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve feedback form"
+        },
+        {
+          "info": {
+            "name": "Update feedback form",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/feedback/:feedback",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              },
+              {
+                "name": "feedback",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update feedback form"
+        },
+        {
+          "info": {
+            "name": "Delete feedback form",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/feedback/:feedback",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              },
+              {
+                "name": "feedback",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete feedback form"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

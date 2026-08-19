@@ -1,0 +1,149 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lever Applications Postings API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Postings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List postings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/postings"
+          },
+          "docs": "List postings"
+        },
+        {
+          "info": {
+            "name": "Create posting",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lever.co/v1/postings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create posting"
+        },
+        {
+          "info": {
+            "name": "Retrieve posting",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/postings/:posting",
+            "params": [
+              {
+                "name": "posting",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve posting"
+        },
+        {
+          "info": {
+            "name": "Update posting",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.lever.co/v1/postings/:posting",
+            "params": [
+              {
+                "name": "posting",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update posting"
+        },
+        {
+          "info": {
+            "name": "List application questions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/postings/:posting/applications",
+            "params": [
+              {
+                "name": "posting",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List application questions"
+        },
+        {
+          "info": {
+            "name": "Apply to posting",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lever.co/v1/postings/:posting/apply",
+            "params": [
+              {
+                "name": "posting",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Apply to posting"
+        },
+        {
+          "info": {
+            "name": "List users with access",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/postings/:posting/users",
+            "params": [
+              {
+                "name": "posting",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List users with access"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

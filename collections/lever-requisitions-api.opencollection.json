@@ -1,0 +1,109 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lever Applications Requisitions API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Requisitions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List requisitions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/requisitions"
+          },
+          "docs": "List requisitions"
+        },
+        {
+          "info": {
+            "name": "Create requisition",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lever.co/v1/requisitions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create requisition"
+        },
+        {
+          "info": {
+            "name": "Retrieve requisition",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/requisitions/:requisition",
+            "params": [
+              {
+                "name": "requisition",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve requisition"
+        },
+        {
+          "info": {
+            "name": "Update requisition",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.lever.co/v1/requisitions/:requisition",
+            "params": [
+              {
+                "name": "requisition",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update requisition"
+        },
+        {
+          "info": {
+            "name": "Delete requisition",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lever.co/v1/requisitions/:requisition",
+            "params": [
+              {
+                "name": "requisition",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete requisition"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

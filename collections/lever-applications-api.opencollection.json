@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lever Applications API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Applications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List applications for opportunity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/applications",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              }
+            ]
+          },
+          "docs": "List applications for opportunity"
+        },
+        {
+          "info": {
+            "name": "Retrieve application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/applications/:application",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              },
+              {
+                "name": "application",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve application"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

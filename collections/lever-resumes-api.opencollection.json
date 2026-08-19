@@ -1,0 +1,44 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lever Applications Resumes API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Resumes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List resumes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/resumes",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              }
+            ]
+          },
+          "docs": "List resumes"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,65 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lever Applications Stages API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List stages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/stages"
+          },
+          "docs": "List stages"
+        },
+        {
+          "info": {
+            "name": "Retrieve stage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/stages/:stage",
+            "params": [
+              {
+                "name": "stage",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve stage"
+        },
+        {
+          "info": {
+            "name": "List disposition stages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/disposition_stages"
+          },
+          "docs": "List disposition stages"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

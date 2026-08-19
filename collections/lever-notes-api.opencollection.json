@@ -1,0 +1,44 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lever Applications Notes API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Notes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List notes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lever.co/v1/opportunities/:opportunity/notes",
+            "params": [
+              {
+                "name": "opportunity",
+                "value": "",
+                "type": "path",
+                "description": "Opportunity identifier (UUID)."
+              }
+            ]
+          },
+          "docs": "List notes"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
