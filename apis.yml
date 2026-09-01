@@ -327,7 +327,7 @@ apis:
   name: Lever ArchiveReasons API
   description: The ArchiveReasons API from Lever — 2 operation(s) for archivereasons.
   tags:
-  - ArchiveReasons
+  - Archive Reasons
   tags_raw:
   - ArchiveReasons
   properties:
@@ -343,7 +343,7 @@ apis:
   name: Lever AuditEvents API
   description: The AuditEvents API from Lever — 1 operation(s) for auditevents.
   tags:
-  - AuditEvents
+  - Audit Events
   tags_raw:
   - AuditEvents
   properties:
