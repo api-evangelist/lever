@@ -324,38 +324,6 @@ apis:
     url: https://hire.lever.co/developer/documentation
   - type: GraphQL
     url: graphql/lever-graphql.md
-- aid: lever:lever-archivereasons-api
-  name: Lever ArchiveReasons API
-  description: The ArchiveReasons API from Lever — 2 operation(s) for archivereasons.
-  tags:
-  - Archive Reasons
-  tags_raw:
-  - ArchiveReasons
-  properties:
-  - type: OpenAPI
-    url: openapi/lever-archivereasons-api-openapi.yml
-  - type: Documentation
-    url: https://hire.lever.co/developer/documentation#opportunities
-  - type: APIReference
-    url: https://hire.lever.co/developer/documentation
-  - type: GraphQL
-    url: graphql/lever-graphql.md
-- aid: lever:lever-auditevents-api
-  name: Lever AuditEvents API
-  description: The AuditEvents API from Lever — 1 operation(s) for auditevents.
-  tags:
-  - Audit Events
-  tags_raw:
-  - AuditEvents
-  properties:
-  - type: OpenAPI
-    url: openapi/lever-auditevents-api-openapi.yml
-  - type: Documentation
-    url: https://hire.lever.co/developer/documentation#opportunities
-  - type: APIReference
-    url: https://hire.lever.co/developer/documentation
-  - type: GraphQL
-    url: graphql/lever-graphql.md
 - aid: lever:lever-contacts-api
   name: Lever Contacts API
   description: The Contacts API from Lever — 1 operation(s) for contacts.
@@ -578,6 +546,34 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/lever-users-api-openapi.yml
+  - type: Documentation
+    url: https://hire.lever.co/developer/documentation#opportunities
+  - type: APIReference
+    url: https://hire.lever.co/developer/documentation
+  - type: GraphQL
+    url: graphql/lever-graphql.md
+- aid: lever:lever-archive-reasons-api
+  name: Lever Archive Reasons API
+  description: The Archive Reasons API from Lever — 2 operation(s) for archive reasons.
+  tags:
+  - Archive Reasons
+  properties:
+  - type: OpenAPI
+    url: openapi/lever-archive-reasons-api-openapi.yml
+  - type: Documentation
+    url: https://hire.lever.co/developer/documentation#opportunities
+  - type: APIReference
+    url: https://hire.lever.co/developer/documentation
+  - type: GraphQL
+    url: graphql/lever-graphql.md
+- aid: lever:lever-audit-events-api
+  name: Lever Audit Events API
+  description: The Audit Events API from Lever — 1 operation(s) for audit events.
+  tags:
+  - Audit Events
+  properties:
+  - type: OpenAPI
+    url: openapi/lever-audit-events-api-openapi.yml
   - type: Documentation
     url: https://hire.lever.co/developer/documentation#opportunities
   - type: APIReference
