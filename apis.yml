@@ -34,7 +34,7 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/lever.png
 tags:
-- HR
+- Human Resources
 - ATS
 - Recruiting
 - Talent Acquisition
@@ -106,6 +106,9 @@ apis:
 - aid: lever:lever-stages-api
   name: Lever Stages API
   tags:
+  - Stages
+  - Pipelines
+  tags_raw:
   - Stages
   - Pipeline
   properties:
@@ -213,7 +216,7 @@ apis:
   name: Lever Files API
   tags:
   - File
-  - Resumes
+  - Resume
   tags_raw:
   - Files
   - Resumes
@@ -226,6 +229,9 @@ apis:
 - aid: lever:lever-resumes-api
   name: Lever Resumes API
   tags:
+  - Resume
+  - Parsing
+  tags_raw:
   - Resumes
   - Parsing
   properties:
@@ -300,6 +306,10 @@ apis:
 - aid: lever:lever-xml-feed-api
   name: Lever XML Feed
   tags:
+  - XML
+  - Job Board
+  - Aggregators
+  tags_raw:
   - XML
   - Job Boards
   - Aggregators
@@ -484,6 +494,8 @@ apis:
   name: Lever Resumes API
   description: The Resumes API from Lever — 1 operation(s) for resumes.
   tags:
+  - Resume
+  tags_raw:
   - Resumes
   properties:
   - type: OpenAPI
