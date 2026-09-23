@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Lever Applications Interviews API
+  title: Lever Interviews API
   version: v1
   description: Minimal OpenAPI 3.1 spec for the Lever talent acquisition platform REST API. Lever's API is organized around the Opportunity (candidate-centric) data model and exposes postings, requisitions, applications, interviews, feedback, offers, files, users, and audit events.
   contact:
@@ -25,6 +25,8 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/Collection'
+      operationId: getOpportunitiesByOpportunityInterviews
+      x-operation-id-source: derived
   /opportunities/{opportunity}/panels:
     parameters:
     - $ref: '#/components/parameters/OpportunityId'
@@ -35,15 +37,9 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/Collection'
+      operationId: getOpportunitiesByOpportunityPanels
+      x-operation-id-source: derived
 components:
-  parameters:
-    OpportunityId:
-      name: opportunity
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Opportunity identifier (UUID).
   responses:
     Collection:
       description: Collection response with cursor pagination
@@ -62,6 +58,14 @@ components:
               next:
                 type: string
             additionalProperties: true
+  parameters:
+    OpportunityId:
+      name: opportunity
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Opportunity identifier (UUID).
   securitySchemes:
     basicAuth:
       type: http

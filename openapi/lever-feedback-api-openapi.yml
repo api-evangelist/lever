@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Lever Applications Feedback API
+  title: Lever Feedback API
   version: v1
   description: Minimal OpenAPI 3.1 spec for the Lever talent acquisition platform REST API. Lever's API is organized around the Opportunity (candidate-centric) data model and exposes postings, requisitions, applications, interviews, feedback, offers, files, users, and audit events.
   contact:
@@ -25,6 +25,8 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/Collection'
+      operationId: getOpportunitiesByOpportunityFeedback
+      x-operation-id-source: derived
     post:
       tags:
       - Feedback
@@ -34,6 +36,8 @@ paths:
       responses:
         '201':
           $ref: '#/components/responses/Resource'
+      operationId: postOpportunitiesByOpportunityFeedback
+      x-operation-id-source: derived
   /opportunities/{opportunity}/feedback/{feedback}:
     parameters:
     - $ref: '#/components/parameters/OpportunityId'
@@ -49,6 +53,8 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/Resource'
+      operationId: getOpportunitiesByOpportunityFeedbackByFeedback
+      x-operation-id-source: derived
     put:
       tags:
       - Feedback
@@ -58,6 +64,8 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/Resource'
+      operationId: putOpportunitiesByOpportunityFeedbackByFeedback
+      x-operation-id-source: derived
     delete:
       tags:
       - Feedback
@@ -65,15 +73,9 @@ paths:
       responses:
         '204':
           description: Deleted
+      operationId: deleteOpportunitiesByOpportunityFeedbackByFeedback
+      x-operation-id-source: derived
 components:
-  parameters:
-    OpportunityId:
-      name: opportunity
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Opportunity identifier (UUID).
   responses:
     Collection:
       description: Collection response with cursor pagination
@@ -103,6 +105,14 @@ components:
                 type: object
                 additionalProperties: true
             additionalProperties: true
+  parameters:
+    OpportunityId:
+      name: opportunity
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Opportunity identifier (UUID).
   requestBodies:
     Generic:
       required: true

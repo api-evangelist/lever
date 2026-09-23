@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Lever Applications Users API
+  title: Lever Users API
   version: v1
   description: Minimal OpenAPI 3.1 spec for the Lever talent acquisition platform REST API. Lever's API is organized around the Opportunity (candidate-centric) data model and exposes postings, requisitions, applications, interviews, feedback, offers, files, users, and audit events.
   contact:
@@ -23,6 +23,8 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/Collection'
+      operationId: getUsers
+      x-operation-id-source: derived
     post:
       tags:
       - Users
@@ -32,6 +34,8 @@ paths:
       responses:
         '201':
           $ref: '#/components/responses/Resource'
+      operationId: postUsers
+      x-operation-id-source: derived
   /users/{user}:
     parameters:
     - name: user
@@ -46,6 +50,8 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/Resource'
+      operationId: getUsersByUser
+      x-operation-id-source: derived
 components:
   responses:
     Collection:

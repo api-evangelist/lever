@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Lever Applications ArchiveReasons API
+  title: Lever Archive Reasons API
   version: v1
   description: Minimal OpenAPI 3.1 spec for the Lever talent acquisition platform REST API. Lever's API is organized around the Opportunity (candidate-centric) data model and exposes postings, requisitions, applications, interviews, feedback, offers, files, users, and audit events.
   contact:
@@ -13,16 +13,18 @@ security:
 - basicAuth: []
 - bearerAuth: []
 tags:
-- name: ArchiveReasons
+- name: Archive Reasons
 paths:
   /archive_reasons:
     get:
       tags:
-      - ArchiveReasons
+      - Archive Reasons
       summary: List archive reasons
       responses:
         '200':
           $ref: '#/components/responses/Collection'
+      operationId: getArchiveReasons
+      x-operation-id-source: derived
   /archive_reasons/{archive_reason}:
     parameters:
     - name: archive_reason
@@ -32,11 +34,13 @@ paths:
         type: string
     get:
       tags:
-      - ArchiveReasons
+      - Archive Reasons
       summary: Retrieve archive reason
       responses:
         '200':
           $ref: '#/components/responses/Resource'
+      operationId: getArchiveReasonsByArchiveReason
+      x-operation-id-source: derived
 components:
   responses:
     Collection:

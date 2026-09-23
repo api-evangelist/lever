@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Lever Applications Postings API
+  title: Lever Postings API
   version: v1
   description: Minimal OpenAPI 3.1 spec for the Lever talent acquisition platform REST API. Lever's API is organized around the Opportunity (candidate-centric) data model and exposes postings, requisitions, applications, interviews, feedback, offers, files, users, and audit events.
   contact:
@@ -23,6 +23,8 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/Collection'
+      operationId: getPostings
+      x-operation-id-source: derived
     post:
       tags:
       - Postings
@@ -32,6 +34,8 @@ paths:
       responses:
         '201':
           $ref: '#/components/responses/Resource'
+      operationId: postPostings
+      x-operation-id-source: derived
   /postings/{posting}:
     parameters:
     - name: posting
@@ -46,6 +50,8 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/Resource'
+      operationId: getPostingsByPosting
+      x-operation-id-source: derived
     put:
       tags:
       - Postings
@@ -55,6 +61,8 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/Resource'
+      operationId: putPostingsByPosting
+      x-operation-id-source: derived
   /postings/{posting}/applications:
     parameters:
     - name: posting
@@ -69,6 +77,8 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/Collection'
+      operationId: getPostingsByPostingApplications
+      x-operation-id-source: derived
   /postings/{posting}/apply:
     parameters:
     - name: posting
@@ -85,6 +95,8 @@ paths:
       responses:
         '201':
           $ref: '#/components/responses/Resource'
+      operationId: postPostingsByPostingApply
+      x-operation-id-source: derived
   /postings/{posting}/users:
     parameters:
     - name: posting
@@ -99,6 +111,8 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/Collection'
+      operationId: getPostingsByPostingUsers
+      x-operation-id-source: derived
 components:
   responses:
     Collection:
