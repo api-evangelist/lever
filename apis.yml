@@ -35,7 +35,7 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/lever.png
 tags:
 - Human Resources
-- ATS
+- Applicant Tracking
 - Recruiting
 - Talent Acquisition
 - Software-as-a-Service
@@ -60,97 +60,6 @@ apis:
   description: >-
     Legacy Candidates endpoints maintained for backward compatibility. New integrations should use Opportunities;
     Candidates remain available for historical record retrieval.
-- aid: lever:lever-contacts-api
-  name: Lever Contacts API
-  tags:
-  - Contacts
-  - People
-  properties:
-  - url: https://hire.lever.co/developer/documentation#contacts
-    type: Documentation
-  description: >-
-    Contacts represent unique people across multiple opportunities, allowing Lever to deduplicate candidates
-    who apply to multiple roles.
-- aid: lever:lever-postings-api
-  name: Lever Postings API
-  tags:
-  - Postings
-  - Job
-  - Public
-  tags_raw:
-  - Postings
-  - Jobs
-  - Public
-  properties:
-  - url: https://hire.lever.co/developer/documentation#postings
-    type: Documentation
-  - url: https://github.com/lever/postings-api
-    type: SDKs
-  description: >-
-    Manage job postings programmatically and power custom public job sites. The Postings API has a public
-    read-only mode that does not require authentication for displaying job listings.
-- aid: lever:lever-applications-api
-  name: Lever Applications API
-  tags:
-  - Application
-  - Submissions
-  tags_raw:
-  - Applications
-  - Submissions
-  properties:
-  - url: https://hire.lever.co/developer/documentation#applications
-    type: Documentation
-  description: >-
-    Submit candidate applications against postings, including resumes, cover letters, and EEO survey data,
-    and retrieve historical application records.
-- aid: lever:lever-stages-api
-  name: Lever Stages API
-  tags:
-  - Stages
-  - Pipelines
-  tags_raw:
-  - Stages
-  - Pipeline
-  properties:
-  - url: https://hire.lever.co/developer/documentation#stages
-    type: Documentation
-  description: >-
-    List the configured pipeline stages and disposition stages used to route opportunities through screening,
-    interviews, offer, and hire.
-- aid: lever:lever-archive-reasons-api
-  name: Lever Archive Reasons API
-  tags:
-  - Archive Reasons
-  - Disposition
-  properties:
-  - url: https://hire.lever.co/developer/documentation#archive-reasons
-    type: Documentation
-  description: >-
-    Read archive reasons used when an opportunity is archived (rejected, hired, withdrawn) for downstream
-    EEO and analytics reporting.
-- aid: lever:lever-interviews-api
-  name: Lever Interviews API
-  tags:
-  - Interviews
-  - Panels
-  - Scheduling
-  properties:
-  - url: https://hire.lever.co/developer/documentation#interviews
-    type: Documentation
-  description: >-
-    Read interview events, panels, and schedules associated with an opportunity, including interviewer
-    assignments and time slots.
-- aid: lever:lever-feedback-api
-  name: Lever Feedback API
-  tags:
-  - Feedback
-  - Scorecards
-  properties:
-  - url: https://hire.lever.co/developer/documentation#feedback
-    type: Documentation
-  description: >-
-    Read feedback forms and scorecards completed by interviewers and hiring managers, with templated and
-    free-form fields.
 - aid: lever:lever-feedback-templates-api
   name: Lever Feedback Templates API
   tags:
@@ -162,117 +71,6 @@ apis:
   description: >-
     Manage feedback form templates, including question definitions and scoring rubrics applied across
     postings and stages.
-- aid: lever:lever-notes-api
-  name: Lever Notes API
-  tags:
-  - Notes
-  properties:
-  - url: https://hire.lever.co/developer/documentation#notes
-    type: Documentation
-  description: >-
-    Add and retrieve free-form notes attached to opportunities for recruiter and hiring manager collaboration.
-- aid: lever:lever-offers-api
-  name: Lever Offers API
-  tags:
-  - Offers
-  - Approvals
-  properties:
-  - url: https://hire.lever.co/developer/documentation#offers
-    type: Documentation
-  description: >-
-    Read offer records associated with opportunities, including offer letters, approval status, and compensation
-    breakdowns.
-- aid: lever:lever-requisitions-api
-  name: Lever Requisitions API
-  tags:
-  - Requisitions
-  - Headcount
-  properties:
-  - url: https://hire.lever.co/developer/documentation#requisitions
-    type: Documentation
-  description: >-
-    Manage requisitions backing each posting — headcount, compensation bands, and approval state — typically
-    synced from an HRIS.
-- aid: lever:lever-tags-api
-  name: Lever Tags API
-  tags:
-  - Tags
-  - Metadata
-  properties:
-  - url: https://hire.lever.co/developer/documentation#tags
-    type: Documentation
-  description: List and apply tags to opportunities for cohorting, sourcing, and reporting workflows.
-- aid: lever:lever-sources-api
-  name: Lever Sources API
-  tags:
-  - Sources
-  - Attribution
-  properties:
-  - url: https://hire.lever.co/developer/documentation#sources
-    type: Documentation
-  description: >-
-    Read source attribution (job board, referral, sourced) for opportunities to drive sourcing analytics.
-- aid: lever:lever-files-api
-  name: Lever Files API
-  tags:
-  - File
-  - Resume
-  tags_raw:
-  - Files
-  - Resumes
-  properties:
-  - url: https://hire.lever.co/developer/documentation#files
-    type: Documentation
-  description: >-
-    Upload and download files (resumes, cover letters, portfolio attachments) associated with opportunities;
-    supports docx, doc, pdf, txt, jpg, png.
-- aid: lever:lever-resumes-api
-  name: Lever Resumes API
-  tags:
-  - Resume
-  - Parsing
-  tags_raw:
-  - Resumes
-  - Parsing
-  properties:
-  - url: https://hire.lever.co/developer/documentation#resumes
-    type: Documentation
-  description: >-
-    Read parsed resume data — work history, education, skills — extracted from candidate submissions.
-- aid: lever:lever-users-api
-  name: Lever Users API
-  tags:
-  - User
-  - Permissions
-  tags_raw:
-  - Users
-  - Permissions
-  properties:
-  - url: https://hire.lever.co/developer/documentation#users
-    type: Documentation
-  description: >-
-    Manage Lever users and their access roles (Super Admin, Admin, Team Member, Limited Team Member, Interviewer,
-    Outsider).
-- aid: lever:lever-audit-events-api
-  name: Lever Audit Events API
-  tags:
-  - Audit
-  - Security
-  properties:
-  - url: https://hire.lever.co/developer/documentation#audit-events
-    type: Documentation
-  description: Read tenant-scoped audit events for security monitoring and SOC reporting.
-- aid: lever:lever-eeo-api
-  name: Lever EEO API
-  tags:
-  - EEO
-  - Compliance
-  properties:
-  - url: https://hire.lever.co/developer/documentation#eeo
-    type: Documentation
-  description: >-
-    Read anonymous EEO survey data for compliance reporting; PII-isolated from the standard candidate
-    endpoints.
 - aid: lever:lever-webhooks-api
   name: Lever Webhooks API
   tags:
@@ -320,11 +118,14 @@ apis:
     XML feed of open postings used by job aggregators (Indeed, Glassdoor, LinkedIn) for syndication.
 - aid: lever:lever-applications-api
   name: Lever Applications API
-  description: The Applications API from Lever — 2 operation(s) for applications.
+  description: Submit candidate applications against postings, including resumes, cover letters, and EEO
+    survey data, and retrieve historical application records.
   tags:
   - Application
+  - Submissions
   tags_raw:
   - Applications
+  - Submissions
   properties:
   - type: OpenAPI
     url: openapi/lever-applications-api-openapi.yml
@@ -332,13 +133,15 @@ apis:
     url: https://hire.lever.co/developer/documentation#opportunities
   - type: APIReference
     url: https://hire.lever.co/developer/documentation
-  - type: GraphQL
-    url: graphql/lever-graphql.md
+  - url: https://hire.lever.co/developer/documentation#applications
+    type: Documentation
 - aid: lever:lever-contacts-api
   name: Lever Contacts API
-  description: The Contacts API from Lever — 1 operation(s) for contacts.
+  description: Contacts represent unique people across multiple opportunities, allowing Lever to deduplicate
+    candidates who apply to multiple roles.
   tags:
   - Contacts
+  - People
   properties:
   - type: OpenAPI
     url: openapi/lever-contacts-api-openapi.yml
@@ -346,13 +149,15 @@ apis:
     url: https://hire.lever.co/developer/documentation#opportunities
   - type: APIReference
     url: https://hire.lever.co/developer/documentation
-  - type: GraphQL
-    url: graphql/lever-graphql.md
+  - url: https://hire.lever.co/developer/documentation#contacts
+    type: Documentation
 - aid: lever:lever-eeo-api
   name: Lever EEO API
-  description: The EEO API from Lever — 2 operation(s) for eeo.
+  description: Read anonymous EEO survey data for compliance reporting; PII-isolated from the standard candidate
+    endpoints.
   tags:
   - EEO
+  - Compliance
   properties:
   - type: OpenAPI
     url: openapi/lever-eeo-api-openapi.yml
@@ -360,13 +165,15 @@ apis:
     url: https://hire.lever.co/developer/documentation#opportunities
   - type: APIReference
     url: https://hire.lever.co/developer/documentation
-  - type: GraphQL
-    url: graphql/lever-graphql.md
+  - url: https://hire.lever.co/developer/documentation#eeo
+    type: Documentation
 - aid: lever:lever-feedback-api
   name: Lever Feedback API
-  description: The Feedback API from Lever — 2 operation(s) for feedback.
+  description: Read feedback forms and scorecards completed by interviewers and hiring managers, with templated
+    and free-form fields.
   tags:
   - Feedback
+  - Scorecards
   properties:
   - type: OpenAPI
     url: openapi/lever-feedback-api-openapi.yml
@@ -374,15 +181,18 @@ apis:
     url: https://hire.lever.co/developer/documentation#opportunities
   - type: APIReference
     url: https://hire.lever.co/developer/documentation
-  - type: GraphQL
-    url: graphql/lever-graphql.md
+  - url: https://hire.lever.co/developer/documentation#feedback
+    type: Documentation
 - aid: lever:lever-files-api
   name: Lever Files API
-  description: The Files API from Lever — 2 operation(s) for files.
+  description: Upload and download files (resumes, cover letters, portfolio attachments) associated with
+    opportunities; supports docx, doc, pdf, txt, jpg, png.
   tags:
   - File
+  - Resume
   tags_raw:
   - Files
+  - Resumes
   properties:
   - type: OpenAPI
     url: openapi/lever-files-api-openapi.yml
@@ -390,8 +200,8 @@ apis:
     url: https://hire.lever.co/developer/documentation#opportunities
   - type: APIReference
     url: https://hire.lever.co/developer/documentation
-  - type: GraphQL
-    url: graphql/lever-graphql.md
+  - url: https://hire.lever.co/developer/documentation#files
+    type: Documentation
 - aid: lever:lever-forms-api
   name: Lever Forms API
   description: The Forms API from Lever — 2 operation(s) for forms.
@@ -404,13 +214,14 @@ apis:
     url: https://hire.lever.co/developer/documentation#opportunities
   - type: APIReference
     url: https://hire.lever.co/developer/documentation
-  - type: GraphQL
-    url: graphql/lever-graphql.md
 - aid: lever:lever-interviews-api
   name: Lever Interviews API
-  description: The Interviews API from Lever — 2 operation(s) for interviews.
+  description: Read interview events, panels, and schedules associated with an opportunity, including interviewer
+    assignments and time slots.
   tags:
   - Interviews
+  - Panels
+  - Scheduling
   properties:
   - type: OpenAPI
     url: openapi/lever-interviews-api-openapi.yml
@@ -418,11 +229,12 @@ apis:
     url: https://hire.lever.co/developer/documentation#opportunities
   - type: APIReference
     url: https://hire.lever.co/developer/documentation
-  - type: GraphQL
-    url: graphql/lever-graphql.md
+  - url: https://hire.lever.co/developer/documentation#interviews
+    type: Documentation
 - aid: lever:lever-notes-api
   name: Lever Notes API
-  description: The Notes API from Lever — 1 operation(s) for notes.
+  description: Add and retrieve free-form notes attached to opportunities for recruiter and hiring manager
+    collaboration.
   tags:
   - Notes
   properties:
@@ -432,13 +244,15 @@ apis:
     url: https://hire.lever.co/developer/documentation#opportunities
   - type: APIReference
     url: https://hire.lever.co/developer/documentation
-  - type: GraphQL
-    url: graphql/lever-graphql.md
+  - url: https://hire.lever.co/developer/documentation#notes
+    type: Documentation
 - aid: lever:lever-offers-api
   name: Lever Offers API
-  description: The Offers API from Lever — 1 operation(s) for offers.
+  description: Read offer records associated with opportunities, including offer letters, approval status,
+    and compensation breakdowns.
   tags:
   - Offers
+  - Approvals
   properties:
   - type: OpenAPI
     url: openapi/lever-offers-api-openapi.yml
@@ -446,8 +260,8 @@ apis:
     url: https://hire.lever.co/developer/documentation#opportunities
   - type: APIReference
     url: https://hire.lever.co/developer/documentation
-  - type: GraphQL
-    url: graphql/lever-graphql.md
+  - url: https://hire.lever.co/developer/documentation#offers
+    type: Documentation
 - aid: lever:lever-opportunities-api
   name: Lever Opportunities API
   description: The Opportunities API from Lever — 10 operation(s) for opportunities.
@@ -460,13 +274,14 @@ apis:
     url: https://hire.lever.co/developer/documentation#opportunities
   - type: APIReference
     url: https://hire.lever.co/developer/documentation
-  - type: GraphQL
-    url: graphql/lever-graphql.md
 - aid: lever:lever-postings-api
   name: Lever Postings API
-  description: The Postings API from Lever — 5 operation(s) for postings.
+  description: Manage job postings programmatically and power custom public job sites. The Postings API
+    has a public read-only mode that does not require authentication for displaying job listings.
   tags:
   - Postings
+  - Job
+  - Public
   properties:
   - type: OpenAPI
     url: openapi/lever-postings-api-openapi.yml
@@ -474,13 +289,21 @@ apis:
     url: https://hire.lever.co/developer/documentation#opportunities
   - type: APIReference
     url: https://hire.lever.co/developer/documentation
-  - type: GraphQL
-    url: graphql/lever-graphql.md
+  - url: https://hire.lever.co/developer/documentation#postings
+    type: Documentation
+  - url: https://github.com/lever/postings-api
+    type: SDKs
+  tags_raw:
+  - Postings
+  - Jobs
+  - Public
 - aid: lever:lever-requisitions-api
   name: Lever Requisitions API
-  description: The Requisitions API from Lever — 2 operation(s) for requisitions.
+  description: Manage requisitions backing each posting — headcount, compensation bands, and approval state
+    — typically synced from an HRIS.
   tags:
   - Requisitions
+  - Headcount
   properties:
   - type: OpenAPI
     url: openapi/lever-requisitions-api-openapi.yml
@@ -488,15 +311,17 @@ apis:
     url: https://hire.lever.co/developer/documentation#opportunities
   - type: APIReference
     url: https://hire.lever.co/developer/documentation
-  - type: GraphQL
-    url: graphql/lever-graphql.md
+  - url: https://hire.lever.co/developer/documentation#requisitions
+    type: Documentation
 - aid: lever:lever-resumes-api
   name: Lever Resumes API
-  description: The Resumes API from Lever — 1 operation(s) for resumes.
+  description: Read parsed resume data — work history, education, skills — extracted from candidate submissions.
   tags:
   - Resume
+  - Parsing
   tags_raw:
   - Resumes
+  - Parsing
   properties:
   - type: OpenAPI
     url: openapi/lever-resumes-api-openapi.yml
@@ -504,13 +329,15 @@ apis:
     url: https://hire.lever.co/developer/documentation#opportunities
   - type: APIReference
     url: https://hire.lever.co/developer/documentation
-  - type: GraphQL
-    url: graphql/lever-graphql.md
+  - url: https://hire.lever.co/developer/documentation#resumes
+    type: Documentation
 - aid: lever:lever-sources-api
   name: Lever Sources API
-  description: The Sources API from Lever — 1 operation(s) for sources.
+  description: Read source attribution (job board, referral, sourced) for opportunities to drive sourcing
+    analytics.
   tags:
   - Sources
+  - Attribution
   properties:
   - type: OpenAPI
     url: openapi/lever-sources-api-openapi.yml
@@ -518,13 +345,15 @@ apis:
     url: https://hire.lever.co/developer/documentation#opportunities
   - type: APIReference
     url: https://hire.lever.co/developer/documentation
-  - type: GraphQL
-    url: graphql/lever-graphql.md
+  - url: https://hire.lever.co/developer/documentation#sources
+    type: Documentation
 - aid: lever:lever-stages-api
   name: Lever Stages API
-  description: The Stages API from Lever — 3 operation(s) for stages.
+  description: List the configured pipeline stages and disposition stages used to route opportunities through
+    screening, interviews, offer, and hire.
   tags:
   - Stages
+  - Pipelines
   properties:
   - type: OpenAPI
     url: openapi/lever-stages-api-openapi.yml
@@ -532,13 +361,17 @@ apis:
     url: https://hire.lever.co/developer/documentation#opportunities
   - type: APIReference
     url: https://hire.lever.co/developer/documentation
-  - type: GraphQL
-    url: graphql/lever-graphql.md
+  - url: https://hire.lever.co/developer/documentation#stages
+    type: Documentation
+  tags_raw:
+  - Stages
+  - Pipeline
 - aid: lever:lever-tags-api
   name: Lever Tags API
-  description: The Tags API from Lever — 1 operation(s) for tags.
+  description: List and apply tags to opportunities for cohorting, sourcing, and reporting workflows.
   tags:
   - Tags
+  - Metadata
   properties:
   - type: OpenAPI
     url: openapi/lever-tags-api-openapi.yml
@@ -546,15 +379,18 @@ apis:
     url: https://hire.lever.co/developer/documentation#opportunities
   - type: APIReference
     url: https://hire.lever.co/developer/documentation
-  - type: GraphQL
-    url: graphql/lever-graphql.md
+  - url: https://hire.lever.co/developer/documentation#tags
+    type: Documentation
 - aid: lever:lever-users-api
   name: Lever Users API
-  description: The Users API from Lever — 2 operation(s) for users.
+  description: Manage Lever users and their access roles (Super Admin, Admin, Team Member, Limited Team
+    Member, Interviewer, Outsider).
   tags:
   - User
+  - Permissions
   tags_raw:
   - Users
+  - Permissions
   properties:
   - type: OpenAPI
     url: openapi/lever-users-api-openapi.yml
@@ -562,13 +398,15 @@ apis:
     url: https://hire.lever.co/developer/documentation#opportunities
   - type: APIReference
     url: https://hire.lever.co/developer/documentation
-  - type: GraphQL
-    url: graphql/lever-graphql.md
+  - url: https://hire.lever.co/developer/documentation#users
+    type: Documentation
 - aid: lever:lever-archive-reasons-api
   name: Lever Archive Reasons API
-  description: The Archive Reasons API from Lever — 2 operation(s) for archive reasons.
+  description: Read archive reasons used when an opportunity is archived (rejected, hired, withdrawn) for
+    downstream EEO and analytics reporting.
   tags:
   - Archive Reasons
+  - Disposition
   properties:
   - type: OpenAPI
     url: openapi/lever-archive-reasons-api-openapi.yml
@@ -576,13 +414,15 @@ apis:
     url: https://hire.lever.co/developer/documentation#opportunities
   - type: APIReference
     url: https://hire.lever.co/developer/documentation
-  - type: GraphQL
-    url: graphql/lever-graphql.md
+  - url: https://hire.lever.co/developer/documentation#archive-reasons
+    type: Documentation
 - aid: lever:lever-audit-events-api
   name: Lever Audit Events API
-  description: The Audit Events API from Lever — 1 operation(s) for audit events.
+  description: Read tenant-scoped audit events for security monitoring and SOC reporting.
   tags:
   - Audit Events
+  - Audit
+  - Security
   properties:
   - type: OpenAPI
     url: openapi/lever-audit-events-api-openapi.yml
@@ -590,8 +430,8 @@ apis:
     url: https://hire.lever.co/developer/documentation#opportunities
   - type: APIReference
     url: https://hire.lever.co/developer/documentation
-  - type: GraphQL
-    url: graphql/lever-graphql.md
+  - url: https://hire.lever.co/developer/documentation#audit-events
+    type: Documentation
 common:
 - type: AgenticAccess
   url: agentic-access/lever-agentic-access.yml
