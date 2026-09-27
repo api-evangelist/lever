@@ -45,7 +45,26 @@ paths:
       operationId: getOpportunitiesByOpportunityApplicationsByApplication
       x-operation-id-source: derived
 components:
+  parameters:
+    OpportunityId:
+      name: opportunity
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Opportunity identifier (UUID).
   responses:
+    Resource:
+      description: Single resource response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                additionalProperties: true
+            additionalProperties: true
     Collection:
       description: Collection response with cursor pagination
       content:
@@ -63,25 +82,6 @@ components:
               next:
                 type: string
             additionalProperties: true
-    Resource:
-      description: Single resource response
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              data:
-                type: object
-                additionalProperties: true
-            additionalProperties: true
-  parameters:
-    OpportunityId:
-      name: opportunity
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Opportunity identifier (UUID).
   securitySchemes:
     basicAuth:
       type: http

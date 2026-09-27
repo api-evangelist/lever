@@ -33,7 +33,7 @@
     "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "lever-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "superseded outputs removed: lever-archive-reasons-api-openapi.yml, lever-audit-events-api-openapi.yml",
-    "apis.yml register: written (+2 apis, 41 total)"
+    "apis.yml register: written (+2 apis, 24 total)"
   ],
   "skipped": [
     "lever-applications-api-openapi.yml: previously refined output, superseded by openapi/_original/",

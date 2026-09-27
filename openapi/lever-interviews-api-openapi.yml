@@ -40,6 +40,14 @@ paths:
       operationId: getOpportunitiesByOpportunityPanels
       x-operation-id-source: derived
 components:
+  parameters:
+    OpportunityId:
+      name: opportunity
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Opportunity identifier (UUID).
   responses:
     Collection:
       description: Collection response with cursor pagination
@@ -58,14 +66,6 @@ components:
               next:
                 type: string
             additionalProperties: true
-  parameters:
-    OpportunityId:
-      name: opportunity
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Opportunity identifier (UUID).
   securitySchemes:
     basicAuth:
       type: http
