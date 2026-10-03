@@ -84,26 +84,7 @@ components:
       schema:
         type: string
       description: Opportunity identifier (UUID).
-  requestBodies:
-    Generic:
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            additionalProperties: true
   responses:
-    Resource:
-      description: Single resource response
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              data:
-                type: object
-                additionalProperties: true
-            additionalProperties: true
     Collection:
       description: Collection response with cursor pagination
       content:
@@ -120,6 +101,25 @@ components:
                 type: boolean
               next:
                 type: string
+            additionalProperties: true
+    Resource:
+      description: Single resource response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                additionalProperties: true
+            additionalProperties: true
+  requestBodies:
+    Generic:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
             additionalProperties: true
   securitySchemes:
     basicAuth:

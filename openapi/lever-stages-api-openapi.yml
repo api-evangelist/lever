@@ -53,17 +53,6 @@ paths:
       x-operation-id-source: derived
 components:
   responses:
-    Resource:
-      description: Single resource response
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              data:
-                type: object
-                additionalProperties: true
-            additionalProperties: true
     Collection:
       description: Collection response with cursor pagination
       content:
@@ -80,6 +69,17 @@ components:
                 type: boolean
               next:
                 type: string
+            additionalProperties: true
+    Resource:
+      description: Single resource response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                additionalProperties: true
             additionalProperties: true
   securitySchemes:
     basicAuth:
