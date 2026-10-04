@@ -76,15 +76,26 @@ paths:
       operationId: deleteOpportunitiesByOpportunityFeedbackByFeedback
       x-operation-id-source: derived
 components:
-  parameters:
-    OpportunityId:
-      name: opportunity
-      in: path
+  requestBodies:
+    Generic:
       required: true
-      schema:
-        type: string
-      description: Opportunity identifier (UUID).
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
   responses:
+    Resource:
+      description: Single resource response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                additionalProperties: true
+            additionalProperties: true
     Collection:
       description: Collection response with cursor pagination
       content:
@@ -102,25 +113,14 @@ components:
               next:
                 type: string
             additionalProperties: true
-    Resource:
-      description: Single resource response
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              data:
-                type: object
-                additionalProperties: true
-            additionalProperties: true
-  requestBodies:
-    Generic:
+  parameters:
+    OpportunityId:
+      name: opportunity
+      in: path
       required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            additionalProperties: true
+      schema:
+        type: string
+      description: Opportunity identifier (UUID).
   securitySchemes:
     basicAuth:
       type: http
