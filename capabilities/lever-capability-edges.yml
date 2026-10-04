@@ -1,0 +1,120 @@
+slug: lever
+provider: Lever
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 11
+edges:
+- tag: Interviews
+  spec_file: lever-interviews-api-openapi.yml
+  capability_id: BC-300.10
+  capability_id_l1: BC-300
+  capability_name: Talent Acquisition Management
+  confidence: 0.93
+  evidence: GET /opportunities/{opportunity}/interviews 'List interviews'; 'List interview panels'
+  reason: Candidate interviews and interview panels are unambiguously part of the recruiting/hiring process.
+- tag: Opportunities
+  spec_file: lever-opportunities-api-openapi.yml
+  capability_id: BC-300.10
+  capability_id_l1: BC-300
+  capability_name: Talent Acquisition Management
+  confidence: 0.92
+  evidence: '''List candidates''; ''Update stage''; ''Update archived state'' on the Opportunity (candidate-centric)
+    data model'
+  reason: Despite the sales-sounding word 'Opportunities', these operations manage candidates and their
+    hiring pipeline stages — applicant tracking, i.e. Talent Acquisition Management.
+- tag: Postings
+  spec_file: lever-postings-api-openapi.yml
+  capability_id: BC-300.10
+  capability_id_l1: BC-300
+  capability_name: Talent Acquisition Management
+  confidence: 0.92
+  evidence: POST /postings 'Create posting'; POST /postings/{posting}/apply 'Apply to posting'; 'List
+    application questions'
+  reason: Job posting creation and candidate application intake on an applicant tracking platform — squarely
+    Talent Acquisition Management.
+- tag: Applications
+  spec_file: lever-applications-api-openapi.yml
+  capability_id: BC-300.10
+  capability_id_l1: BC-300
+  capability_name: Talent Acquisition Management
+  confidence: 0.9
+  evidence: GET /opportunities/{opportunity}/applications — 'List applications for opportunity' on the
+    'Lever talent acquisition platform'
+  reason: Job applications tied to candidate opportunities in an applicant tracking system — core recruiting/hiring,
+    i.e. Talent Acquisition Management.
+- tag: Offers
+  spec_file: lever-offers-api-openapi.yml
+  capability_id: BC-300.10
+  capability_id_l1: BC-300
+  capability_name: Talent Acquisition Management
+  confidence: 0.88
+  evidence: GET /opportunities/{opportunity}/offers 'List offers'
+  reason: Employment offers extended to candidates — the closing step of talent acquisition, not commercial
+    sales offers.
+- tag: Feedback
+  spec_file: lever-feedback-api-openapi.yml
+  capability_id: BC-300.10
+  capability_id_l1: BC-300
+  capability_name: Talent Acquisition Management
+  confidence: 0.85
+  evidence: POST /opportunities/{opportunity}/feedback 'Create feedback form' (platform exposes 'interviews,
+    feedback, offers')
+  reason: Interview scorecards/feedback forms on candidate opportunities — part of candidate evaluation
+    in hiring, not customer feedback.
+- tag: Requisitions
+  spec_file: lever-requisitions-api-openapi.yml
+  capability_id: BC-300.10
+  capability_id_l1: BC-300
+  capability_name: Talent Acquisition Management
+  confidence: 0.85
+  evidence: 'POST /requisitions ''Create requisition''; vendor: ''Lever is a talent acquisition and applicant
+    tracking platform'''
+  reason: Hiring requisitions in an ATS are the authorisation artefact for recruiting a role; part of
+    talent acquisition (recruiting/hiring).
+- tag: Resumes
+  spec_file: lever-resumes-api-openapi.yml
+  capability_id: BC-300.10
+  capability_id_l1: BC-300
+  capability_name: Talent Acquisition Management
+  confidence: 0.85
+  evidence: GET /opportunities/{opportunity}/resumes 'List resumes'
+  reason: Candidate resume retrieval against the candidate-centric Opportunity model — recruiting/candidate
+    documentation within talent acquisition.
+- tag: Stages
+  spec_file: lever-stages-api-openapi.yml
+  capability_id: BC-300.10
+  capability_id_l1: BC-300
+  capability_name: Talent Acquisition Management
+  confidence: 0.75
+  evidence: GET /stages 'List stages'; GET /disposition_stages 'List disposition stages'
+  reason: Candidate pipeline stages and disposition stages are recruiting-funnel constructs in the ATS,
+    supporting talent acquisition.
+- tag: Contacts
+  spec_file: lever-contacts-api-openapi.yml
+  capability_id: BC-300.10
+  capability_id_l1: BC-300
+  capability_name: Talent Acquisition Management
+  confidence: 0.72
+  evidence: '''Retrieve contact'' / ''Update contact'' on a platform ''organized around the Opportunity
+    (candidate-centric) data model'''
+  reason: Contacts here are candidate person records underlying opportunities in the ATS, so they serve
+    recruiting. Generic CRUD on a 'contact' object keeps confidence moderate.
+- tag: Archive Reasons
+  spec_file: lever-archive-reasons-api-openapi.yml
+  capability_id: BC-300.10
+  capability_id_l1: BC-300
+  capability_name: Talent Acquisition Management
+  confidence: 0.7
+  evidence: GET /archive_reasons 'List archive reasons'
+  reason: Reference data describing why a candidate opportunity was archived (rejection/disposition reasons)
+    within the ATS; supports the recruiting pipeline. Mapped to talent acquisition, though it is thin
+    reference-list data.

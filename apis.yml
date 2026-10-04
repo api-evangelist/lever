@@ -445,6 +445,9 @@ apis:
   - type: Documentation
     url: https://hire.lever.co/developer/documentation#audit-events
 common:
+- type: CapabilityMap
+  url: capabilities/lever-capability-edges.yml
+  name: Lever Business Capability Map
 - type: AgenticAccess
   url: agentic-access/lever-agentic-access.yml
 - type: TrustCenter
