@@ -114,14 +114,6 @@ paths:
       operationId: getPostingsByPostingUsers
       x-operation-id-source: derived
 components:
-  requestBodies:
-    Generic:
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            additionalProperties: true
   responses:
     Resource:
       description: Single resource response
@@ -150,6 +142,14 @@ components:
                 type: boolean
               next:
                 type: string
+            additionalProperties: true
+  requestBodies:
+    Generic:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
             additionalProperties: true
   securitySchemes:
     basicAuth:
