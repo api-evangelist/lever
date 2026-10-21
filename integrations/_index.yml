@@ -186,3 +186,30 @@
     status: Acquired
   status: not-a-workflow
   arazzo: null
+- slug: lever-index-ventures
+  label: Index Ventures
+  partner: index-ventures
+  partner_name: Index Ventures
+  category: vc portfolio participation
+  type: register
+  channel: standard-directory
+  evidence: https://www.indexventures.com/companies/lever/
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: Index Ventures companies (indexventures.com/companies/)
+    standard: null
+    spec_file: null
+    role: vc-portfolio-company
+    registered_name: Lever
+    register_id: https://www.indexventures.com/companies/lever/
+    register_country: north-america
+    register_website: http://lever.co
+    matched_domain: lever.co
+    matched_by: domain
+    signal_note: 'participation only: the venture firm''s own published portfolio lists the company (investment);
+      an ownership and participation record, not conformance or certification'
+    detected_by: sweep-vc-portfolios.py
+    detected: '2026-10-21'
+  status: not-a-workflow
+  arazzo: null
